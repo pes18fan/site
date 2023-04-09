@@ -91,7 +91,7 @@ pre {
     line-height: 1.4;
 }
 
-@media only screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     .container {
         margin: var(--smol-normal-margin);
         margin-left: var(--smol-side-margin);
@@ -99,7 +99,16 @@ pre {
     }
 }
 
-@media only screen and (max-width: 780px) {
+
+@media (max-width: 440px) {
+    .container {
+        margin: var(--smollest-normal-margin);
+        margin-left: var(--smollest-side-margin);
+        margin-right: var(--smollest-side-margin);
+    }
+}
+
+@media (max-width: 780px) {
     body {
         font-size: var(--smol-font-size);
     }
@@ -109,10 +118,3 @@ pre {
     }
 }
 
-@media only screen and (max-width: 440px) {
-    .container {
-        margin: var(--smollest-normal-margin);
-        margin-left: var(--smollest-side-margin);
-        margin-right: var(--smollest-side-margin);
-    }
-}
