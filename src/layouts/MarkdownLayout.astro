@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+
+const { frontmatter } = Astro.props;
+
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="website of the GitHub user pes18fan"
+        />
+        <meta property="og:site_name" content="pes18fan" />
+        <meta property="og:url" content="https://pes18fan.github.io/" />
+        <meta property="og:title" content="pes18fan" />
+        <meta
+            property="og:description"
+            content={frontmatter.description}
+        />
+        <meta property="og:type" content="website" />
+        <link rel="icon" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{frontmatter.title}</title>
+    </head>
+
+    <body>
+        <main>
+            <Navbar />
+
+            <div class="container">
+                <p><i>Written on: {frontmatter.pubDate}</i></p>
+                <slot />
+            </div>
+
+            <Footer />
+        </main>
+    </body>
+</html>

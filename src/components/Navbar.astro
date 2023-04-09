@@ -1,0 +1,131 @@
+<div class="container">
+    <div class="full-navbar">
+        <header class="terminal-logo">
+            <div class="terminal-prompt">
+                <a href="/" class="site-name">pes18fan</a>:~$
+                {Astro.url.pathname}
+            </div>
+        </header>
+        <nav class="terminal-menu">
+            <ul>
+                <li>
+                    <a
+                        href="https://www.github.com/pes18fan"
+                        class="nav-list-item"
+                        target="_blank">github/</a
+                    >
+                </li>
+                <li>
+                    <a href="/projects" class="nav-list-item"> projects/</a>
+                </li>
+                <li>
+                    <a href="/blog" class="nav-list-item"> blog/</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<style>
+    @keyframes cursor {
+        from {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    header {
+        float: none;
+    }
+
+    .full-navbar {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .terminal-prompt::after {
+        content: "";
+        background: var(--accent-color);
+        display: inline-block;
+        height: 1em;
+        bottom: -2px;
+        position: relative;
+        -webkit-animation: cursor 1.5s infinite;
+        animation: cursor 1.5s infinite;
+        width: 8px;
+    }
+
+    .terminal-prompt::before {
+        content: none;
+    }
+
+    .terminal-menu {
+        margin-left: auto;
+    }
+
+    .terminal-menu ul {
+        display: flex;
+        justify-content: flex-end;
+        justify-items: flex-end;
+        flex-direction: row;
+        justify-content: left;
+        margin-top: 0;
+        list-style-type: none;
+        padding: 0 !important;
+        width: 100%;
+    }
+
+    .terminal-menu li {
+        color: var(--low-contrast-text);
+        position: relative;
+        margin-right: 40px;
+        cursor: pointer;
+    }
+
+    .nav-list-item {
+        color: var(--low-contrast-text);
+    }
+
+    .nav-list-item:hover {
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    @media only screen and (max-width: 1000px) {
+        .container {
+            margin: var(--smol-normal-margin);
+            margin-left: var(--smol-side-margin);
+            margin-right: var(--smol-side-margin);
+        }
+
+        .full-navbar {
+            flex-direction: column;
+        }
+
+        .terminal-menu {
+            margin-top: 10px;
+            margin-left: 0;
+        }
+    }
+
+    @media only screen and (max-width: 440px) {
+        .terminal-menu li {
+            margin-right: 30px;
+        }
+
+        .site-name {
+            width: 3ch;
+            overflow: hidden;
+            display: inline-block;
+        }
+    }
+</style>

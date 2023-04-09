@@ -1,0 +1,118 @@
+:root {
+    --accent-color: #4fefcade;
+    --font-stack: monospace;
+    --text-color: #eeeeeede;
+    --low-contrast-text: #bbbbbbde;
+    --global-font-size: 16px;
+    --global-heading-size: 20px;
+    --normal-margin: 20px;
+    --side-margin: 160px;
+
+    --smol-font-size: 14px;
+    --smol-heading-size: 18px;
+    --smol-normal-margin: 15px;
+    --smol-side-margin: 80px;
+
+    --smollest-normal-margin: 10px;
+    --smollest-side-margin: 40px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-stack);
+    font-size: var(--global-font-size);
+    background-color: #161616;
+    color: var(--text-color);
+}
+
+.container {
+    margin: var(--normal-margin);
+    margin-left: var(--side-margin);
+    margin-right: var(--side-margin);
+}
+
+a {
+    color: var(--accent-color);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline var(--low-contrast-text);
+    text-underline-position: under;
+}
+
+main {
+    margin-top: 30px;
+}
+
+p {
+    margin: 15px 0 15px 0;
+    line-height: 1.8;
+    width: 100%;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+ul {
+    list-style-type: none;
+    line-height: 1.8;
+    padding: 15px 0 15px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: var(--global-heading-size);
+    margin: 25px 0 25px 0;
+}
+
+h1::before {
+    content: "# ";
+    color: var(--accent-color);
+}
+
+h2::before {
+    content: "## ";
+    color: var(--accent-color);
+}
+
+h3::before {
+    content: "### ";
+    color: var(--accent-color);
+}
+
+pre {
+    margin: 25px 0 25px 0;
+    padding: 15px;
+    line-height: 1.4;
+}
+
+@media only screen and (max-width: 1000px) {
+    .container {
+        margin: var(--smol-normal-margin);
+        margin-left: var(--smol-side-margin);
+        margin-right: var(--smol-side-margin);
+    }
+}
+
+@media only screen and (max-width: 780px) {
+    body {
+        font-size: var(--smol-font-size);
+    }
+
+    h1 {
+        font-size: var(--smol-heading-size);
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .container {
+        margin: var(--smollest-normal-margin);
+        margin-left: var(--smollest-side-margin);
+        margin-right: var(--smollest-side-margin);
+    }
+}
