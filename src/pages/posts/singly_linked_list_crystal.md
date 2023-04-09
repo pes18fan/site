@@ -105,8 +105,8 @@ Let's begin with the function to add a node.
 
 To add a node, we could go in two directions. One would be to add the node to the back, but in that case we'd have to traverse the whole list to find where the list ends, which makes the time complexity `O(n)`. That would cause the program to slow down a lot if there are many elements. Thus, it's a better idea to add to the front, which will provide a constant time complexity of `O(1)`. For this, we first allocate the memory for a new node, then check for two edge cases as follows:
 
--   If the list is empty, i.e. `head` is `null` or in the case of Crystal, `nil`, make the head point to the new node instead.
--   If the list is not empty, i.e. `head` already points to some node, make the new node pointer point to that node, and then make `head` point to the new one.
+- \- If the list is empty, i.e. `head` is `null` or in the case of Crystal, `nil`, make the head point to the new node instead.
+- \- If the list is not empty, i.e. `head` already points to some node, make the new node pointer point to that node, and then make `head` point to the new one.
 
 All that can be implemented in a function as follows:
 
