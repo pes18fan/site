@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
@@ -14,7 +14,7 @@ import Footer from "../components/Footer.astro";
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
             name="description"
-            content="website of the GitHub user pes18fan"
+            content={description}
         />
         <meta property="og:site_name" content="pes18fan" />
         <meta property="og:url" content="https://p18f.vercel.app/" />
