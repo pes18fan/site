@@ -91,6 +91,10 @@ pre {
     line-height: 1.4;
 }
 
+.external-link-icon {
+    margin-left: 3px;
+}
+
 @media (max-width: 1000px) {
     .container {
         margin: var(--smol-normal-margin);
