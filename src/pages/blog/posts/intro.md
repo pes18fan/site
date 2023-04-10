@@ -1,11 +1,11 @@
 ---
-layout: "../../layouts/MarkdownLayout.astro"
+layout: "../../../layouts/MarkdownLayout.astro"
 title: hello
 author: pes18fan
 description: "helo world"
 image:
   url: "https://images.pexels.com/photos/327540/pexels-photo-327540.jpeg?cs=tinysrgb&w=600&h=600"
-  alt: "Confused person looking at a laptop"
+  alt: "A man's hand extended out, presumably for a handshake"
 pubDate: 2023-4-9
 ---
 

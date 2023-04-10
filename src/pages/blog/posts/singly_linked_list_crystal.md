@@ -1,5 +1,5 @@
 ---
-layout: "../../layouts/MarkdownLayout.astro"
+layout: "../../../layouts/MarkdownLayout.astro"
 title: how to singly linked list??? (in Crystal)
 author: pes18fan
 description: "What the hell is a singly linked list and how the hell do I make it!!???!!"
