@@ -357,10 +357,12 @@ end
 Handle it in the `case` block:
 
 ```crystal
+# ...
 when 4
   # print the list
   print_list
 when 5
+# ...
 ```
 
 And we're done! Run the program and check out this fancy new data structure you've just learned about.
