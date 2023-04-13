@@ -1,5 +1,5 @@
 {
-  "name": "blog",
+  "name": "p18f.vercel.app",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -12,5 +12,6 @@
   "dependencies": {
     "@astrojs/mdx": "^0.18.4",
     "astro": "^2.2.0"
-  }
+  },
+  "license": "MIT"
 }
