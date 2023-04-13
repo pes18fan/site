@@ -17,7 +17,7 @@
 
 <style>
     .footer {
-        font-size: 12px;
+        font-size: 14px;
         clear: both;
         color: var(--low-contrast-text);
         border-top: 1px solid var(--low-contrast-text);
@@ -54,6 +54,12 @@
     
     nav ul li {
         margin-right: 40px;
+    }
+
+    @media only screen and (max-width: 780px) {
+        .footer {
+            font-size: 12px;
+        }
     }
 
     @media only screen and (max-width: 440px) {
