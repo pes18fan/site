@@ -366,3 +366,5 @@ when 5
 ```
 
 And we're done! Run the program and check out this fancy new data structure you've just learned about.
+
+If you're still not sure, you can check out the [GitHub Gist](https://gist.github.com/pes18fan/82f2f031bac011c4ae1a401cd602ebf2) for this program.
