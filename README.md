@@ -1,5 +1,5 @@
 # site
 
-Yet another update for my site, moving from static HTML & CSS to Astro. This time, there's a blog.
+Personal site. Created using the Astro static site generator. 
 
-My aim here is still to have zero JavaScript on the clientside.
+Aims to have zero or as low JavaScript as possible on the client.
