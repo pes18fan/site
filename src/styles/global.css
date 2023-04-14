@@ -56,7 +56,7 @@ main {
 }
 
 p {
-    margin: 15px 0 15px 0;
+    margin: 20px 0 20px 0;
     line-height: 1.8;
     width: 100%;
     word-wrap: break-word;
@@ -66,22 +66,24 @@ p {
 ul {
     list-style-type: none;
     line-height: 1.8;
-    padding: 15px 0 15px 0;
 }
 
 h1 {
     font-size: var(--global-heading-size);
-    margin: 25px 0 25px 0;
+    margin: 20px 0 20px 0;
 }
 
 h2 {
     font-size: var(--global-heading2-size);
-    margin: 25px 0 25px 0;
+    margin: 20px 0 20px 0;
 }
 
-h3, h4, h5, h6 {
+h3,
+h4,
+h5,
+h6 {
     font-size: var(--global-heading3-size);
-    margin: 25px 0 25px 0;
+    margin: 20px 0 20px 0;
 }
 
 h1::before {
@@ -101,7 +103,7 @@ h3::before {
 
 pre {
     margin: 25px 0 25px 0;
-    padding: 15px;
+    padding: 20px;
     line-height: 1.4;
 }
 
@@ -116,7 +118,6 @@ pre {
         margin-right: var(--smol-side-margin);
     }
 }
-
 
 @media (max-width: 440px) {
     .container {
@@ -139,8 +140,10 @@ pre {
         font-size: var(--smol-heading2-size);
     }
 
-    h3, h4, h5, h6 {
+    h3,
+    h4,
+    h5,
+    h6 {
         font-size: var(--smol-heading3-size);
     }
 }
-
