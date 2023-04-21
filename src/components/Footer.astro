@@ -1,17 +1,8 @@
 <div class="container">
     <footer>
         <p>Powered by <a href="https://astro.build" target="_blank">Astro</a>.</p>
-        <nav>
-            <ul>
-                <li><a href="https://raw.githubusercontent.com/pes18fan/site/main/LICENSE" target="_blank">license/</a></li>
-                <li>
-                    <a
-                        href="https://www.github.com/pes18fan/site"
-                        target="_blank">source/</a
-                    >
-                </li>
-            </ul>
-        </nav>
+        <p>Site <a href="https://github.com/pes18fan/site/">source</a> under <a href="https://raw.githubusercontent.com/pes18fan/site/main/LICENSE" target="_blank">MIT</a>.</p>
+        <p>Site content under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA-4.0</a>.</p>
     </footer>
 </div>
 
@@ -30,41 +21,9 @@
         margin-bottom: 5px;
     }
 
-    nav ul {
-        display: flex;
-        justify-content: flex-end;
-        justify-items: flex-end;
-        flex-direction: row;
-        justify-content: left;
-        margin-top: 0;
-        list-style-type: none;
-        padding: 0 !important;
-        width: 100%;
-    }
-
-    nav a {
-        color: var(--low-contrast-text);
-    }
-
-    nav a:hover {
-        color: var(--text-color);
-        text-decoration: none;
-    }
-
-    
-    nav ul li {
-        margin-right: 40px;
-    }
-
     @media only screen and (max-width: 780px) {
         footer {
             font-size: 12px;
-        }
-    }
-
-    @media only screen and (max-width: 440px) {
-        ul li {
-            margin-right: 30px;
         }
     }
 </style>
