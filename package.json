@@ -12,7 +12,11 @@
   "dependencies": {
     "@astrojs/mdx": "^0.18.4",
     "@astrojs/rss": "^2.3.2",
-    "astro": "^2.2.0"
+    "@types/marked": "^4.0.8",
+    "@types/sanitize-html": "^2.9.0",
+    "astro": "^2.2.0",
+    "marked": "^4.3.0",
+    "sanitize-html": "^2.10.0"
   },
   "license": "MIT"
 }

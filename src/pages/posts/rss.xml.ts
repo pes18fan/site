@@ -2,6 +2,9 @@ import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
 
+import sanitizeHTML from "sanitize-html";
+import { marked } from "marked";
+
 export const get = async (context: APIContext) => {
     const posts = await getCollection("posts");
     return rss({
@@ -12,7 +15,8 @@ export const get = async (context: APIContext) => {
             title: post.data.title,
             pubDate: post.data.pubDate,
             description: post.data.description,
-            link: `/posts/${post.slug}`
+            link: `/posts/${post.slug}`,
+            content: sanitizeHTML(marked.parse(post.body))
         }))
     });
 }
