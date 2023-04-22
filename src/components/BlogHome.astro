@@ -1,10 +1,21 @@
+---
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("posts");
+---
+
 <p>here's my little blog, where i write about random stuff, i guess.</p>
 
 <ul>
-    <li>
-        - <a href="/blog/posts/singly_linked_list_crystal"
+    {allPosts.map(post => (
+        <li>
+            - <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+        </li>
+    ))}
+    <!-- <li>
+        - <a href="/posts/singly_linked_list_crystal"
             >how to singly linked list?? (in Crystal)</a
         >
     </li>
-    <li>- <a href="/blog/posts/intro">intro</a></li>
+    <li>- <a href="/posts/intro">intro</a></li> -->
 </ul>

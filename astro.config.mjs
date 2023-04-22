@@ -9,5 +9,6 @@ export default defineConfig({
       theme: "monokai"
     }
   },
-  integrations: [mdx()]
+  integrations: [mdx()],
+  site: "https://p18f.vercel.app"
 });
