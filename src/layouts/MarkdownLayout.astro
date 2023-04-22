@@ -35,6 +35,7 @@ import Footer from "../components/Footer.astro";
             <Navbar />
 
             <div class="container">
+                <i>Written on {frontmatter.pubDate.toDateString()}</i>
                 <slot />
             </div>
 

@@ -9,7 +9,7 @@ const postCollection = defineCollection({
             url: z.string(),
             alt: z.string()
         }),
-        pubDate: z.string()
+        pubDate: z.date()
     })
 });
 
