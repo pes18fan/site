@@ -1,0 +1,145 @@
+---
+title: getting rid of semicolons
+author: pes18fan
+description: "So you're creating a programming language and don't want semicolons? Here's how to do it."
+image:
+  url: "https://images.pexels.com/photos/2696299/pexels-photo-2696299.jpeg?cs=tinysrgb&w=600&h=600"
+  alt: "Confused and stressed person with hands on his head looking at a laptop"
+pubDate: 2023-04-09
+slug: "no-semicolons"
+---
+
+# getting rid of semicolons
+
+I've been working on an interpreter for a simple toy language that I call Kaze recently, following the amazing book [Crafting Interpreters](https://craftinginterpreters.com) by Bob Nystrom. In one of the early chapters of the book, Bob states something along the lines of "if you're building a language today, make sure it doesn't use semicolons". But making sure that was the case was trickier than expected. Here's how I did it.
+
+## meet Kaze
+
+Here's a simple hello world in Kaze:
+
+```kaze
+print("hello, world!\n")
+```
+
+(I know, the syntax highlighting is a bit off, I'm not very experienced with TextMate grammar okay?)
+
+Anyways, as you can see from this simple example, we don't need a semicolon. But this one-liner doesn't quite show what that can mean. Check this fizzbuzz out:
+
+```kaze
+var str = ""
+
+for var i = 1; i <= 100; i = i + 1 
+begin
+    str = ""
+
+    if i % 3 == 0 then str = str + "fizz"
+    if i % 5 == 0 then str = str + "buzz"
+
+    print(str + i + "\n")
+end
+```
+
+As you can see, the syntax is kinda like Pascal, but that's not the point. The point is, we don't need any semis! How? To find that out, we need to peer into how the language is implemented.
+
+## no semis? how?
+
+You'd think getting rid of semis would be easy, since you'd think "we could just remove them from the grammar!" Not quite. The entire reason semis exist in programming languages is to prevent parser ambiguity. For example, look at this:
+
+```lua
+x = 1
+-1
+```
+
+What do you think this gets parsed as? Is it two things: `var x = 1` and `-1`, or `var x = 1 - 1`? That's where this issue lies.
+
+Languages have tried to get around this in many ways. Python makes newlines and whitespace significant, and JavaScript inserts semicolons behind the scenes. I dislike both approaches, so I went with what Lua, which does not need any special formatting or semis whatsoever, does. For example, this is fully valid:
+
+```lua
+a = 2 b = 3 print(a + b)
+```
+
+It will print `5`, as expected. How?
+
+### how do you do it, Lua?
+
+There's an [excellent article by 17cupsofcoffee](https://www.seventeencups.net/posts/how-lua-avoids-semicolons/) that fully explains this, but in short, Lua does this by dropping expression-statements. What are those, you ask? An expression statement is simply put, an expression parsed as a statement, which allows you to use an expression (something that returns a value) in a place where you're supposed to use a statement (something that well... does something). Expression statements could, for example, allow you to use the short circuting behavior of logical operators to execute something conditionally, as in:
+
+```js
+true && someFunction();
+```
+
+Of course, this is not all they can do.
+
+Lua doesn't allow expression statements at all. This makes sure that the ambiguous example stated previously is always parsed as `x = 1 - 1`. This does mean that if you need to use an expression statement as above, you'll need to put it in a temporary variable, like:
+
+```lua
+_ = true and someFunction()
+```
+
+I did the same thing with Kaze, so in that language it would look something like:
+
+```kaze
+var _ = true and someFunction()
+```
+
+But, there's still one big issue.
+
+## return statements
+
+The parser issue got somewhat fixed here, but it still remains in a small capacity with return statements.
+
+Previously, I said that we removed expression statements. Well, not quite. There are actually a few expressions that still should be usable as statements, for example function calls or assignments. Wouldn't it be awkward to have to assign a variable to even do those? So, I allowed them here too, and now we have a problem. Take a look at this:
+
+```kaze
+fun foo
+begin
+  return
+  bar()
+end
+```
+
+Is this returning nothing or is it returning `foo()`? The parser will normally just think that it's the latter case, but that may not be true. So how do we fix this?
+
+Lua does so by only allowing return statements at the end of a block. That is, a return statement must always be followed by a corresponding `end` statement. Thus, let's say we have this code:
+
+```lua
+function foo()
+  return
+  bar()
+end
+```
+
+As return statements must always be at the end of a block, anything after the return statement must be for that statement. So, the example is parsed as a return statement that returns bar(). How do we implement the ability to check if the return statement is at the end of a block, though?
+
+In my parser, written in Crystal, this is how I did it:
+
+```crystal
+# Parse a return statement.
+# A return statement must always be at the end of a block.
+private def return_statement : Stmt
+  keyword = previous
+  value = nil
+  unless check?(TT::END)
+    value = expression
+
+    unless check?(TT::END)
+      raise error(keyword, "Return statement must be at the end of a block.")
+    end
+  end
+
+  Stmt::Return.new(keyword, value)
+end
+```
+
+Let me explain this a little bit.
+
+This is a recursive descent parser, i.e. it recursively creates an abstract syntax tree based on the tokens it encounters. This is the function invoked when the parser encounters a `return` token, represented by `TT::RETURN`. All the tokens are prefixed with `TT::` where TT is just an alias for the enum TokenType.
+
+Anyways, what it does here is that it firstly assigns the keyword token (I keep that to pinpoint the location of a possible error), then it initializes the return value as nil. After that, it checks if the next token is TT::END. If it is, it simply returns a `Stmt::Return` object without doing anything else. The interesting thing happens if it doesn't find that token. Here's what happens next:
+
+- \- It tries to parse whatever is in front as an expression. If it's a statement, we'll just get an "Expect expression" error. If it's not, we're all good and we keep going.
+- \- Then it looks for the TT::END token again! If it doesn't find it yet again, we know that the return statement is definitely not at the block's end. Thus, we raise an exception.
+
+If everything was all good, we return from the function with the expression to return.
+
+Pretty cool, right?
