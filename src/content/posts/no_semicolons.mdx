@@ -98,7 +98,7 @@ begin
 end
 ```
 
-Is this returning nothing or is it returning `foo()`? The parser will normally just think that it's the latter case, but that may not be true. So how do we fix this?
+Is this returning nothing or is it returning `bar()`? The parser will normally just think that it's the latter case, but that may not be true. So how do we fix this?
 
 Lua does so by only allowing return statements at the end of a block. That is, a return statement must always be followed by a corresponding `end` statement. Thus, let's say we have this code:
 

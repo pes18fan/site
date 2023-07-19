@@ -5,7 +5,7 @@ import { getCollection } from "astro:content";
 import sanitizeHTML from "sanitize-html";
 import { marked } from "marked";
 
-export const get = async (context: APIContext) => {
+export async function get(context: APIContext) {
     const posts = await getCollection("posts");
     return rss({
         title: "pes18fan's posts",

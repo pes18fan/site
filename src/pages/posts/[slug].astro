@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import MarkdownLayout from "../../layouts/MarkdownLayout.astro";
 
-export const getStaticPaths = async () => {
+export async function getStaticPaths() {
     const posts = await getCollection("posts");
     return posts.map(post => ({
         params: { slug: post.slug },
