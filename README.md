@@ -1,3 +1,3 @@
 # site
 
-Personal site. Created using the Astro static site generator. 
+Personal site. Created using the Astro metaframework.
