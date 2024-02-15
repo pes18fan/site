@@ -2,9 +2,11 @@
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts");
+posts.sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
 ---
 
-<p>here's my little blog, where i write about whatever.
+<p>Here's my little blog, where i write about whatever. More recent the post,
+the higher up in the list it is.
 <a href="/posts/rss.xml"><img src="/assets/rss.svg" alt="RSS logo" class="svg-icon" /></a>
 </p>
 
