@@ -1,8 +1,8 @@
 import { readFileSync } from "fs";
 import { defineConfig } from 'astro/config';
 import mdx from "@astrojs/mdx";
-const kazeGrammar = JSON.parse(readFileSync("./public/assets/kaze.tmLanguage.json"));
 
+const kazeGrammar = JSON.parse(readFileSync("./public/assets/kaze.tmLanguage.json"));
 
 // https://astro.build/config
 export default defineConfig({
