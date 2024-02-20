@@ -7,7 +7,11 @@ const kazeGrammar = JSON.parse(readFileSync("./public/assets/kaze.tmLanguage.jso
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    }
+  }),
   markdown: {
     shikiConfig: {
       theme: "monokai",
