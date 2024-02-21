@@ -1,22 +1,49 @@
-<p>Hobby programmer, electronic music enjoyer and manga lover.</p>
+---
+import { Image } from "astro:assets";
+import fpsGame from "../images/fps-game.png"
+---
 
-<div class="info">
-    <h1>links</h1>
+<p>Hello! Just another random internet guy here. I generally go by 
+<i><b>pes18fan</b></i> out here; I've had that name for a while. </p>
 
-    <ul>
-        <li>
-            - personal projects @
-            <a href="https://www.github.com/pes18fan">github:pes18fan</a>
-        </li>
-        <li>
-            - email:
-            <a href="mailto:pes18fan@disr.it">pes18fan@disr.it</a>
-        </li>
-    </ul>
-</div>
+<p>I've been programming as a hobby for several years now, but at this point 
+working towards making a career through it, studying Computer Engineering.
+</p>
+
+<p>I have a deep love for music as well, and I produce some of my own too,
+albeit rather amateur. I also enjoy reading manga.</p>
+
+<p>You can read some of my articles <a href="/posts">[here]</a> if you wish.</p>
+
+<p>
+<b>Reach out:</b> <a href="mailto:pes18fan@disr.it">[pes18fan@disr.it]</a>
+<br />
+<b>Find me:</b> <a href="https://www.github.com/pes18fan">[GitHub]</a>
+</p>
 
 <style>
-    .info {
+    .section {
         margin: var(--normal-margin) 0 var(--normal-margin) 0;
+    }
+
+    .tabbed-ul-container p {
+        margin: auto 0 0.5ch 0;
+    }
+
+    .tabbed-ul {
+        margin-left: 4ch;
+        list-style-type: none;
+    }
+
+    .img-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        max-width: 600px;
     }
 </style>
