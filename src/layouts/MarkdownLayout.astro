@@ -5,12 +5,6 @@ const { frontmatter } = Astro.props;
 
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-
-function formatDate(date: Date) {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-        "Sep", "Oct", "Nov", "Dec"];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-}
 ---
 
 <html lang="en">
@@ -41,7 +35,7 @@ function formatDate(date: Date) {
             <Navbar />
 
             <div class="container">
-                <i>Published on {formatDate(frontmatter.pubDate)}.</i>
+                <i>Written on {frontmatter.pubDate.toDateString()}</i>
                 <slot />
             </div>
 
