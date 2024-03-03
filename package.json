@@ -16,7 +16,7 @@
     "@types/sanitize-html": "^2.9.0",
     "astro": "^2.2.0",
     "marked": "^4.3.0",
-    "sanitize-html": "^2.10.0"
+    "sanitize-html": "^2.12.1"
   },
   "license": "MIT"
 }
