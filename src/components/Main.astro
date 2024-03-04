@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import fpsGame from "../images/fps-game.png"
 
-import MusicInfo from "./MusicInfo.astro";
+import MusicInfo from "./MusicInfo.svelte";
 ---
 
 <p>Hello! Just another random internet guy here. I generally go by 
@@ -23,7 +23,7 @@ albeit rather amateur. I also enjoy reading manga; my favorite one would be
 <br />
 <b>Find me:</b> <a href="https://www.github.com/pes18fan">[GitHub]</a>
 </p>
-<MusicInfo />
+<MusicInfo client:load />
 
 <style>
     .section {

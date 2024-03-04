@@ -1,6 +1,8 @@
 import { readFileSync } from "fs";
 import { defineConfig } from 'astro/config';
+
 import mdx from "@astrojs/mdx";
+import svelte from "@astrojs/svelte";
 
 const kazeGrammar = JSON.parse(readFileSync("./public/assets/kaze.tmLanguage.json"));
 
@@ -17,6 +19,6 @@ export default defineConfig({
       }]
     }
   },
-  integrations: [mdx()],
+  integrations: [mdx(), svelte()],
   site: "https://p18f.vercel.app",
 });
