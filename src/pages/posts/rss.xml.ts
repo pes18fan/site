@@ -1,11 +1,12 @@
 import rss from "@astrojs/rss";
+
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
 
 import sanitizeHTML from "sanitize-html";
 import { marked } from "marked";
 
-export async function get(context: APIContext) {
+export async function GET(context: APIContext) {
     const posts = await getCollection("posts");
     return rss({
         title: "pes18fan's posts",
