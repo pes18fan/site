@@ -1,8 +1,5 @@
 <script>
-const username = "***REMOVED***";
-const apiKey = import.meta.env.PUBLIC_LASTFM_API_KEY;
-
-const url = `https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&user=${username}&api_key=${apiKey}&format=json`;
+const url = "/api/lastfm";
 
 async function getTrack() {
     const res = await fetch(url);
