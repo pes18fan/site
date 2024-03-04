@@ -16,7 +16,7 @@ export default defineConfig({
         scopeName: "source.kaze",
         grammar: kazeGrammar,
         aliases: ["kaze"]
-      }]
+      }, "javascript", "lua", "crystal"]
     }
   },
   integrations: [mdx(), svelte()],
