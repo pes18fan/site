@@ -23,7 +23,5 @@ export default defineConfig({
   integrations: [mdx(), svelte()],
   site: "https://p18f.vercel.app",
   output: "hybrid",
-  adapter: vercel({
-    webAnalytics: { enabled: true }
-  }),
+  adapter: vercel(),
 });
