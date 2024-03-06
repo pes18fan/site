@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+
 import mdx from "@astrojs/mdx";
 import svelte from "@astrojs/svelte";
 import vercel from "@astrojs/vercel/serverless";
