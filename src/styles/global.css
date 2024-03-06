@@ -1,4 +1,5 @@
 :root {
+    --background-color: #161616;
     --accent-color: #4fefcade;
     --font-stack: monospace;
     --text-color: #eeeeeede;
@@ -18,7 +19,7 @@
     --smol-side-margin: 80px;
 
     --smollest-normal-margin: 10px;
-    --smollest-side-margin: 40px;
+    --smollest-side-margin: 20px;
 }
 
 * {
@@ -30,7 +31,7 @@
 body {
     font-family: var(--font-stack);
     font-size: var(--global-font-size);
-    background-color: #161616;
+    background-color: var(--background-color);
     color: var(--text-color);
 }
 
