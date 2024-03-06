@@ -43,6 +43,13 @@ function formatDate(date: Date) {
             <div class="container">
                 <i>Written on {formatDate(frontmatter.pubDate)}.</i>
                 <slot />
+                <script src="https://utteranc.es/client.js"
+                    repo="pes18fan/site-comments"
+                    issue-term="pathname"
+                    theme="photon-dark"
+                    crossorigin="anonymous"
+                    async>
+                </script>
             </div>
 
             <Footer />
