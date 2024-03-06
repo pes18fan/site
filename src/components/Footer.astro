@@ -1,19 +1,34 @@
+---
+import MusicInfo from "./MusicInfo.svelte";
+
+export const prerender = false;
+---
+
 <div class="container">
     <footer>
-        <p>Powered by <a href="https://astro.build" target="_blank">Astro</a>.</p>
-        <p>Site <a href="https://github.com/pes18fan/site/">source</a> under <a href="https://raw.githubusercontent.com/pes18fan/site/main/LICENSE" target="_blank">MIT</a>.</p>
-        <p>Site content under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA-4.0</a>.</p>
+        <div class="footer-info">
+            <p>Powered by <a href="https://astro.build" target="_blank">Astro</a>.</p>
+            <p>Site <a href="https://github.com/pes18fan/site/">source</a> under <a href="https://raw.githubusercontent.com/pes18fan/site/main/LICENSE" target="_blank">MIT</a>.</p>
+            <p>Site content under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA-4.0</a>.</p>
+        </div>
+        { Astro.url.pathname === "/" ? <MusicInfo client:visible /> : null }
     </footer>
 </div>
 
 <style>
     footer {
+        display: flex;
         font-size: 14px;
+        text-align: left;
         clear: both;
         color: var(--low-contrast-text);
+        background-color: var(--background-color);
         border-top: 1px solid var(--low-contrast-text);
         padding: 20px 0 20px 0;
-        margin-top: var(--normal-margin);
+    }
+
+    .footer-info {
+        flex: 1;
     }
 
     p {

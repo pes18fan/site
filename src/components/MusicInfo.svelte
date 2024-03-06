@@ -17,14 +17,29 @@ async function getTrack() {
 }
 </script>
 
+<div class="music-info">
 {#await getTrack() then value}
 {#if value.nowPlayingTrack}
-    <p>
-        <strong>Now playing: </strong> {value.nowPlayingTrack.name} by {value.nowPlayingTrack.artist["#text"]}.
-    </p>
+    <p><b>Now playing</b></p>
+    <p>{value.nowPlayingTrack.name}</p>
+    <p>by {value.nowPlayingTrack.artist["#text"]}.</p>
 {:else}
-    <p>
-        <strong>Last played: </strong> {value.lastPlayedTrack.name} by {value.lastPlayedTrack.artist["#text"]}.
-    </p>
+    <p><b>Last listened to</b></p>
+    <p>{value.lastPlayedTrack.name}</p>
+    <p>by {value.lastPlayedTrack.artist["#text"]}.</p>
 {/if}
 {/await}
+</div>
+
+<style>
+    .music-info {
+        flex: 1;
+        text-align: right;
+        margin-top: 0;
+    } 
+
+    p {
+        margin: 0;
+        margin-bottom: 5px;
+    }
+</style>
