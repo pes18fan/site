@@ -4,22 +4,22 @@
     --font-stack: monospace;
     --text-color: #eeeeeede;
     --low-contrast-text: #bbbbbbde;
-    --global-font-size: 16px;
-    --global-heading-size: 24px;
-    --global-heading2-size: 22px;
-    --global-heading3-size: 20px;
+    --global-font-size: 15px;
+    --global-heading-size: 22px;
+    --global-heading2-size: 20px;
+    --global-heading3-size: 18px;
     --normal-margin: 20px;
-    --side-margin: 160px;
+    --side-margin: 300px;
 
-    --smol-font-size: 14px;
-    --smol-heading-size: 22px;
-    --smol-heading2-size: 20px;
-    --smol-heading3-size: 18px;
+    --smol-font-size: 13px;
+    --smol-heading-size: 20px;
+    --smol-heading2-size: 18px;
+    --smol-heading3-size: 16px;
     --smol-normal-margin: 15px;
-    --smol-side-margin: 80px;
+    --smol-side-margin: 120px;
 
     --smollest-normal-margin: 10px;
-    --smollest-side-margin: 20px;
+    --smollest-side-margin: 25px;
 }
 
 * {
@@ -112,7 +112,7 @@ pre {
     margin-left: 3px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
     .container {
         margin: var(--smol-normal-margin);
         margin-left: var(--smol-side-margin);
@@ -120,7 +120,7 @@ pre {
     }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 520px) {
     .container {
         margin: var(--smollest-normal-margin);
         margin-left: var(--smollest-side-margin);
@@ -128,7 +128,7 @@ pre {
     }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 740px) {
     body {
         font-size: var(--smol-font-size);
     }
