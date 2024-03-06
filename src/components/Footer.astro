@@ -11,7 +11,7 @@ export const prerender = false;
             <p>Site <a href="https://github.com/pes18fan/site/">source</a> under <a href="https://raw.githubusercontent.com/pes18fan/site/main/LICENSE" target="_blank">MIT</a>.</p>
             <p>Site content under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA-4.0</a>.</p>
         </div>
-        { Astro.url.pathname === "/" ? <MusicInfo client:visible /> : null }
+        { Astro.url.pathname === "/" ? <MusicInfo client:load /> : null }
     </footer>
 </div>
 
