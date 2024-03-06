@@ -3,7 +3,10 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "https://my.remarkbox.com" },
+        {
+          "key": "access-control-allow-origin",
+          "value": "*"
+        }
       ]
     }
   ]
