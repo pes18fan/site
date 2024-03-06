@@ -24,9 +24,4 @@ export default defineConfig({
   site: "https://p18f.vercel.app",
   output: "hybrid",
   adapter: vercel(),
-  server: {
-    headers: {
-      "Access-Control-Allow-Origin": "https://my.remarkbox.com",
-    }
-  }
 });
