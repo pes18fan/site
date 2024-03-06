@@ -38,8 +38,21 @@ async function getTrack() {
         margin-top: 0;
     } 
 
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
     p {
         margin: 0;
         margin-bottom: 5px;
+
+        /* for fade-in */
+        opacity: 0;
+        animation: fadeIn 1s ease-in forwards;
     }
 </style>
