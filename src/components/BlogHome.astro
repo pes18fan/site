@@ -3,18 +3,31 @@ import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts");
 posts.sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
+
+function formatDate(date: Date) {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Jul",
+        "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
 ---
 
 <p>I can't really call this a blog, since my post frequency is incredibly low.
 Regardless, here's my... set of articles, where I just write about whatever
-I wish. More recent the post, the higher up the list it is.
+I wish.
 <a href="/posts/rss.xml"><img src="/assets/rss.svg" alt="RSS logo" class="svg-icon" /></a>
 </p>
 
 <ul>
     {posts.map(post => (
         <li>
-            - <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+            <a href={`/posts/${post.slug}`}>{post.data.title}</a><span class="post-link"> &#8226 {formatDate(new Date(post.data.pubDate))}</span>
         </li>
     ))}
 </ul>
+
+<style>
+    .post-link {
+        font-size: 0.9rem;
+        color: var(--low-contrast-text);
+    }
+</style>

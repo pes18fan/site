@@ -1,5 +1,7 @@
 :root {
     --background-color: #161616;
+    --secondary-color: #202020;
+    --tertiary-color: #262626;
     --accent-color: #4fefcade;
     --font-stack: monospace;
     --text-color: #eeeeeede;

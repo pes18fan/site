@@ -4,44 +4,59 @@
     <a href="https://www.github.com/pes18fan" target="_blank">GitHub account</a
     >.
 </p>
-<div>
-    <ul>
-        <li>
-            -
-            <a href="https://www.github.com/pes18fan/zen" target="_blank"
-                >zen</a
-            >: dynamically typed programming language.
-        </li>
-        <li>
-            -
-            <a href="https://www.github.com/pes18fan/notor" target="_blank"
-                >notor</a
-            >: a note-taking terminal app.
-        </li>
-        <li>
-            -
-            <a href="https://www.github.com/pes18fan/libman" target="_blank"
-                >libman</a
-            >: a simple C program to manage a collection of books.
-        </li>
-        <li>
-            -
-            <a href="https://www.github.com/pes18fan/libmanp" target="_blank"
-                >libmanp</a
-            >: "p" for plus; libmanp is libman but a desktop app.
-        </li>
-        <li>
-            -
-            <a href="https://www.github.com/pes18fan/md-prev" target="_blank"
-                >md-prev</a
-            >: a markdown previewer.
-        </li>
-        <li>
-            -
-            <a
-                href="https://www.github.com/pes18fan/tic_tac_toe"
-                target="_blank">tic_tac_toe</a
-            >: a simple tic tac toe game.
-        </li>
-    </ul>
+<div class="projects">
+    <div class="project">
+        <a href="https://www.github.com/pes18fan/zen" target="_blank">zen</a>
+        dynamically typed programming language.
+    </div>
+    <div class="project">
+        <a href="https://www.github.com/pes18fan/notor" target="_blank">notor</a
+        > a note-taking terminal app.
+    </div>
+    <div class="project">
+        <a href="https://www.github.com/pes18fan/watchlist" target="_blank"
+            >watchlist</a
+        > a C program to manage a media watchlist.
+    </div>
+    <div class="project">
+        <a href="https://www.github.com/pes18fan/libman" target="_blank">libman</a
+        > a simple C program to manage a collection of books.
+    </div>
+    <div class="project">
+        <a href="https://www.github.com/pes18fan/libmanp" target="_blank"
+            >libmanp</a
+        > "p" for plus; libmanp is libman but a desktop app.
+    </div>
+    <div class="project">
+        <a href="https://www.github.com/pes18fan/md-prev" target="_blank"
+            >md-prev</a
+        > a simple markdown previewer in React.
+    </div>
+    <div class="project">
+        <a
+            href="https://www.github.com/pes18fan/tic_tac_toe"
+            target="_blank">tic_tac_toe</a
+        > a simple tic tac toe game.
+    </div>
 </div>
+
+<style>
+    .projects {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .project {
+        transition: all 200ms ease;
+        margin: var(--normal-margin);
+        padding: 25px;
+        border: 2px solid var(--accent-color);
+        border-radius: 3px;
+        background-color: var(--secondary-color);
+        line-height: 1.4;
+    }
+
+    .project:hover {
+        background-color: var(--tertiary-color);
+    }
+</style>
