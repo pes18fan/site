@@ -9,7 +9,7 @@
     --global-heading2-size: 20px;
     --global-heading3-size: 18px;
     --normal-margin: 20px;
-    --side-margin: 300px;
+    --side-margin: 320px;
 
     --smol-font-size: 13px;
     --smol-heading-size: 20px;
@@ -120,7 +120,7 @@ pre {
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 540px) {
     .container {
         margin: var(--smollest-normal-margin);
         margin-left: var(--smollest-side-margin);
