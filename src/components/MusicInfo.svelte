@@ -3,30 +3,20 @@ const url = "/api/lastfm";
 
 async function getTrack() {
     const res = await fetch(url);
-    const data = await res.json();
-
-    const nowPlayingTrack = data.recenttracks.track.find(
-        (track) => track["@attr"] && track["@attr"].nowplaying
-    );
-    const lastPlayedTrack = data.recenttracks.track[0];
-
-    return {
-        nowPlayingTrack,
-        lastPlayedTrack,
-    };
+    return await res.json();
 }
 </script>
 
 <div class="music-info">
 {#await getTrack() then value}
-{#if value.nowPlayingTrack}
+{#if value.playing}
     <p><b>Now playing</b></p>
-    <p>{value.nowPlayingTrack.name}</p>
-    <p>by {value.nowPlayingTrack.artist["#text"]}.</p>
+    <p>{value.track}</p>
+    <p>by {value.artist}.</p>
 {:else}
     <p><b>Last listened to</b></p>
-    <p>{value.lastPlayedTrack.name}</p>
-    <p>by {value.lastPlayedTrack.artist["#text"]}.</p>
+    <p>{value.track}</p>
+    <p>by {value.artist}.</p>
 {/if}
 {/await}
 </div>
