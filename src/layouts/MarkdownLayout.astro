@@ -1,16 +1,14 @@
 ---
 import "../styles/global.css";
+import { formatDate, getReadingTime } from "../utils/util.ts"
 
-const { frontmatter } = Astro.props;
+const { post } = Astro.props;
+
+const frontmatter = post.data;
+const minutesRead = getReadingTime(post.body);
 
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-
-function formatDate(date: Date) {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Jul",
-        "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-}
 ---
 
 <html lang="en">
@@ -41,7 +39,8 @@ function formatDate(date: Date) {
             <Navbar />
 
             <div class="container">
-                <i>Written on {formatDate(frontmatter.pubDate)}.</i>
+                <h1>{frontmatter.title}</h1>
+                <i>Written on {formatDate(new Date(frontmatter.pubDate))}. A {minutesRead} minute read.</i>
                 <slot />
 
                 <!-- Comments, powered by utterances -->
@@ -58,3 +57,9 @@ function formatDate(date: Date) {
         </main>
     </body>
 </html>
+
+<style>
+    i {
+        font-size: 14px;
+    }
+</style>

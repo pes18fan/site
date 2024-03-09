@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+
 import { defineConfig } from "astro/config";
 
 import mdx from "@astrojs/mdx";
@@ -18,7 +19,7 @@ export default defineConfig({
         grammar: kazeGrammar,
         aliases: ["kaze"]
       }, "javascript", "lua", "crystal"]
-    }
+    },
   },
   integrations: [mdx(), svelte()],
   site: "https://p18f.vercel.app",
