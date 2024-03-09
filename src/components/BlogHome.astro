@@ -1,14 +1,9 @@
 ---
 import { getCollection } from "astro:content";
+import { formatDate, getReadingTime } from "../utils/util.ts";
 
 const posts = await getCollection("posts");
 posts.sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
-
-function formatDate(date: Date) {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Jul",
-        "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-}
 ---
 
 <p>I can't really call this a blog, since my post frequency is incredibly low.
@@ -20,13 +15,13 @@ I wish.
 <ul>
     {posts.map(post => (
         <li>
-            <a href={`/posts/${post.slug}`}>{post.data.title}</a><span class="post-link"> &#8226 {formatDate(new Date(post.data.pubDate))}</span>
+            - <a href={`/posts/${post.slug}`}>{post.data.title}</a><span class="post-info"> &#8226 {formatDate(new Date(post.data.pubDate))} &#8226 {getReadingTime(post.body)} min read</span>
         </li>
     ))}
 </ul>
 
 <style>
-    .post-link {
+    .post-info {
         font-size: 0.9rem;
         color: var(--low-contrast-text);
     }
