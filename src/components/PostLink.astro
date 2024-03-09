@@ -1,0 +1,37 @@
+---
+const { post } = Astro.props;
+import { formatDate, getReadingTime } from "../utils/util.ts";
+---
+
+<div class="post">
+    <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+    <br />
+    <span class="desc">{post.data.description}</span>
+    <br />
+    <span class="post-info">{formatDate(new Date(post.data.pubDate))} &#8226 {getReadingTime(post.body)} min read</span>
+</div>
+
+<style>
+    .post {
+        border: 2px solid var(--accent-color);
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: var(--normal-margin);
+        margin-bottom: var(--normal-margin);
+        background-color: var(--secondary-color);
+        transition: all 200ms ease;
+    }
+
+    .post:hover {
+        background-color: var(--tertiary-color);
+    }
+
+    .post-info {
+        font-size: 0.9rem;
+        color: var(--low-contrast-text);
+    }
+
+    .desc {
+        font-size: 0.9rem;
+    }
+</style>

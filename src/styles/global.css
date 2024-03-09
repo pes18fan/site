@@ -1,11 +1,11 @@
 :root {
     --background-color: #161616;
     --secondary-color: #202020;
-    --tertiary-color: #262626;
+    --tertiary-color: #242424;
     --accent-color: #4fefcade;
     --font-stack: monospace;
     --text-color: #eeeeeede;
-    --low-contrast-text: #bbbbbbde;
+    --low-contrast-text: #bbbbbbd0;
     --global-font-size: 15px;
     --global-heading-size: 26px;
     --global-heading2-size: 22px;
