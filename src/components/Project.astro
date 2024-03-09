@@ -1,0 +1,23 @@
+---
+const { name, link, desc } = Astro.props;
+---
+
+<div class="project">
+    <a href={link} target="_blank">{name}</a> {desc}
+</div>
+
+<style>
+    .project {
+        transition: all 200ms ease;
+        margin: var(--normal-margin);
+        padding: 25px;
+        border: 2px solid var(--accent-color);
+        border-radius: 3px;
+        background-color: var(--secondary-color);
+        line-height: 1.4;
+    }
+
+    .project:hover {
+        background-color: var(--tertiary-color);
+    }
+</style>
