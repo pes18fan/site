@@ -1,0 +1,155 @@
+---
+title: switching to lazy.nvim 
+author: pes18fan
+description: "Took me long enough."
+image:
+  url: "https://user-images.githubusercontent.com/292349/208301737-68fb279c-ba70-43ef-a369-8c3e8367d6b1.png"
+  alt: "The UI for lazy.nvim shown on its GitHub repo."
+pubDate: 2024-03-10
+slug: "switching_to_lazy"
+---
+
+Been a long time since I posted anything! Well, here I am now, bringing you the
+story of how I finally decided to drink the Kool-Aid by switching to [lazy.nvim](https://github.com/folke/lazy.nvim)
+from packer.
+
+If you didn't know yet, yes I use neovim. Some might claim I'm using it just
+to look cool, and to be honest I can't really refute that. Regardless, once I got used to
+it I realized there was much more to it than just looking like a CIA hacker.
+The efficiency and sheer speed boost you get from switching is ***incredible***,
+but I digress. We're here to talk about my package manager switch.
+
+## beginnings with packer
+
+When I first started using neovim for real, I watched [a video by ThePrimeagen](https://www.youtube.com/watch?v=w7i4amO_zaE)
+where he sets up a nice neovim config using packer with lsp, treesitter, you name it. The
+configuration was great, I set it up for myself and changed up a few things as
+per my needs. It served me well for a long time, and there wasn't no issue
+in particular with it, so one could argue, "why would you need to switch to
+lazy in the first place?"
+
+Apparently, lazy is **much** faster than packer, and it also has a nice UI along
+with a lockfile system to ensure that your configs don't get messed up if you
+switch your device. Those three points were enough to make me switch. Additionally,
+packer is not being maintained anymore (which is something I only just realized),
+so that's another reason to switch.
+
+## getting started
+
+First thing I did was create a `lazy.lua` file replacing the original `packer.lua`
+to place the plugin information in. It begins with this bit of bootstrapping code
+from the [lazy.nvim readme](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation):
+
+```lua
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+```
+
+The bootstrapper will ensure that you don't have to reinstall lazy again if
+you're on a new system, since it will reinstall itself from here.
+
+I followed this with all of my plugins:
+
+```lua
+require("lazy").setup({
+    -- plugins here...
+    -- for example
+    "jiangmiao/auto-pairs",
+
+    -- or for more advanced configuration...
+    {
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" }
+    },
+})
+```
+
+The configuration for adding a plugin is not much different in packer and lazy,
+usually its just some different words. You can check out [this portion of the
+lazy.nvim readme](https://github.com/folke/lazy.nvim?tab=readme-ov-file#packernvim)
+for more information about which packer command is which in lazy, or you can
+check out [my own configuration](https://github.com/pes18fan/dotfiles/blob/main/.config/nvim/lua/p18f/lazy.lua)
+as a reference.
+
+## lazy loading
+
+One of the best things about lazy.nvim is in its name; it can load plugins
+lazily to improve performance. You can set it so that certain plugins only load
+when they are needed in the editor. To do this all you need to do is set `lazy`
+to `true` when adding a plugin:
+
+```lua
+{
+    "nvim-telescope/telescope.nvim", tag = "0.1.5",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    lazy = true,
+}
+```
+
+Another useful option is to set the plugin to load only after a certain event
+occurs. For instance, you can set GitHub Copilot to only load after you enter
+insert mode:
+
+```lua
+{
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
+}
+```
+
+There's also a `VeryLazy` option that apparently only loads a plugin once neovim
+is fully loaded, but I haven't tried that out yet.
+
+## plugin structuring
+
+[According to the readme for lazy](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-structuring-your-plugins), structuring for plugins can be done by using a
+Lua module with various files for each module. This is pretty nice since to add
+new plugin files all you need to do is add a new file. As I'm adapting 
+ThePrimeagen's setup where he put all his plugin configuration in the nvim/after
+folder and it still works with lazy, I don't see the need to do this myself.
+Perhaps there's better performance or something of that sort, maybe someone can
+let me know in the comments.
+
+## super slow startups
+
+After I had set up whatever I had to in lazy and opened neovim with it for the
+first time, the startup time seemed to have changed. And not in a good way. In
+fact, on checking startup times and comparing with packer's, I found a
+horrific discovery.
+
+Lazy was making neovim load ***many, many*** times slower than packer.
+
+On checking the startup times, neovim loaded in 65 milliseconds with packer.
+But with lazy, it took a ridiculous 1021 (!) seconds to load!
+
+Upon further research, I found that for some reason [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+was causing the issue. While I tried to figure out how to fix it, eventually the
+problem just fixed itself. That was a weird one.
+
+## get rid of packer remnants
+
+One thing that would be good to not forget to do is getting rid of remnants of
+packer. If you run `:checkhealth lazy` in neovim, you can see that it will tell
+you to get rid of the `packer_compiled.lua` file and the packer files. Just a
+little detail to remember.
+
+## conclusion
+
+Well, despite the *really* weird stuff happening at first, switching to lazy
+was... pretty easy! I'm not really sure why I was avoiding it so much so far.
+I think it's really nice, and at the end of the day, I did get a performance boost!
+With packer, as I stated before it took neovim 65 milliseconds to load, but now
+with lazy, I got it down to 46. Not a lot, but it's an improvement! Perhaps
+I might be able to get it down even further later on as I keep using it, since
+I've seen people load neovim in less than 20 milliseconds with a lot more plugins
+than I'm using. Hopefully I can figure out some ways to get that to happen.
