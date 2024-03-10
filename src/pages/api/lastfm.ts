@@ -1,12 +1,6 @@
 import type { APIRoute } from "astro";
-import { RateLimiterMemory } from "rate-limiter-flexible";
 
 export const prerender = false;
-
-const rateLimiter = new RateLimiterMemory({
-    points: 10,
-    duration: 10,
-})
 
 const cache = {
     artist: "starting...",
@@ -25,14 +19,7 @@ url.searchParams.set("api_key", apiKey);
 url.searchParams.set("format", "json");
 url.searchParams.set("limit", "1");
 
-export const GET: APIRoute = async ({ request }) => {
-    try {
-        const key = request.headers.get("x-forwarded-for") || request.headers.get("cf-connecting-ip");
-        await rateLimiter.consume(key as string);
-    } catch (err) {
-        return new Response("Too many requests", { status: 429 });
-    }
-    
+export const GET: APIRoute = async () => {
     if (Date.now() - cachedDate > 1000 * 60) {
         await updateCache();
     }
