@@ -124,13 +124,13 @@ let me know in the comments.
 
 After I had set up whatever I had to in lazy and opened neovim with it for the
 first time, the startup time seemed to have changed. And not in a good way. In
-fact, on checking startup times and comparing with packer's, I found a
-horrific discovery.
+fact, on checking startup times and comparing with packer's, I discovered
+something horrific.
 
 Lazy was making neovim load ***many, many*** times slower than packer.
 
 On checking the startup times, neovim loaded in 65 milliseconds with packer.
-But with lazy, it took a ridiculous 1021 (!) seconds to load!
+But with lazy, it took a ridiculous 1021 (!) milliseconds to load!
 
 Upon further research, I found that for some reason [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 was causing the issue. While I tried to figure out how to fix it, eventually the
