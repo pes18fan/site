@@ -1,27 +1,48 @@
+ /* The bare minimum English subset, plus copyright & arrows (← ↑ → ↓) & quotes (“ ” ‘ ’) & bullet (•) */
+@font-face {
+    font-family: 'Recursive';
+    font-style: oblique 0deg 15deg;
+    font-weight: 300 1000;
+    font-display: swap;
+    src: url('../fonts/Recursive_VF_1.085--subset_range_english_basic.woff2') format('woff2');
+    unicode-range: U+0020-007F,U+00A9,U+2190-2193,U+2018,U+2019,U+201C,U+201D,U+2022;
+}
+
 :root {
     --background-color: #161616;
     --secondary-color: #202020;
     --tertiary-color: #242424;
     --accent-color: #4fefcade;
-    --font-stack: monospace;
+    --font-stack: "Recursive", monospace;
     --text-color: #eeeeeede;
     --low-contrast-text: #bbbbbbd0;
     --global-font-size: 15px;
-    --global-heading-size: 26px;
-    --global-heading2-size: 22px;
-    --global-heading3-size: 20px;
+    --global-heading-size: 28px;
+    --global-heading2-size: 24px;
+    --global-heading3-size: 22px;
     --normal-margin: 20px;
     --side-margin: 320px;
 
     --smol-font-size: 14px;
-    --smol-heading-size: 22px;
-    --smol-heading2-size: 18px;
-    --smol-heading3-size: 16px;
+    --smol-heading-size: 24px;
+    --smol-heading2-size: 20px;
+    --smol-heading3-size: 18px;
     --smol-normal-margin: 15px;
     --smol-side-margin: 120px;
 
     --smollest-normal-margin: 10px;
     --smollest-side-margin: 25px;
+
+    --recursive-slnt: -2;
+    --recursive-casl: 0.8;
+    --recursive-crsv: 1;
+    --recursive-mono: 0.6;
+
+    font-variation-settings:
+        "SLNT" var(--recursive-slnt),
+        "CASL" var(--recursive-casl),
+        "CRSV" var(--recursive-crsv),
+        "MONO" var(--recursive-mono);
 }
 
 * {
@@ -74,11 +95,13 @@ ul {
 h1 {
     font-size: var(--global-heading-size);
     margin: 30px 0 30px 0;
+    letter-spacing: 0.1rem;
 }
 
 h2 {
     font-size: var(--global-heading2-size);
     margin: 20px 0 20px 0;
+    letter-spacing: 0.05rem;
 }
 
 h3,
@@ -87,21 +110,6 @@ h5,
 h6 {
     font-size: var(--global-heading3-size);
     margin: 20px 0 20px 0;
-}
-
-h1::before {
-    content: "# ";
-    color: var(--accent-color);
-}
-
-h2::before {
-    content: "## ";
-    color: var(--accent-color);
-}
-
-h3::before {
-    content: "### ";
-    color: var(--accent-color);
 }
 
 pre {
