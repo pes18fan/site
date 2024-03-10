@@ -40,7 +40,10 @@ import Footer from "../components/Footer.astro";
 
             <div class="container">
                 <h1>{frontmatter.title}</h1>
-                <i>Written on {formatDate(new Date(frontmatter.pubDate))}. A {minutesRead} minute read.</i>
+                <ul>
+                <li>&#8226 <i>Written on {formatDate(new Date(frontmatter.pubDate))} by {frontmatter.author}.</i></li>
+                <li>&#8226 <i>A {minutesRead} minute read.</i></li>
+                </ul>
                 <slot />
 
                 <!-- Comments, powered by utterances -->

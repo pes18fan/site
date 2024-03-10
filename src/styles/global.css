@@ -68,11 +68,36 @@ a {
     color: var(--accent-color);
     cursor: pointer;
     text-decoration: none;
+    position: relative;
 }
 
-a:hover {
-    text-decoration: underline var(--low-contrast-text);
-    text-underline-position: under;
+a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 0;
+    background: var(--accent-color);
+    transition: width 300ms ease;
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+/* Any link that doesn't need the underline to appear uses this class. */
+.no-underline {
+    text-decoration: none;
+}
+
+/* For the RSS svg that is also a link. */
+.rss {
+    margin-left: 3px;
+}
+
+.rss::after {
+    background-color: #f08c31;
 }
 
 main {
@@ -116,10 +141,6 @@ pre {
     margin: 25px 0 25px 0;
     padding: 20px;
     line-height: 1.4;
-}
-
-.svg-icon {
-    margin-left: 3px;
 }
 
 @media (max-width: 1200px) {
