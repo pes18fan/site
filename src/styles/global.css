@@ -36,7 +36,7 @@
     --recursive-slnt: -2;
     --recursive-casl: 0.8;
     --recursive-crsv: 1;
-    --recursive-mono: 0.6;
+    --recursive-mono: 0.7;
 
     font-variation-settings:
         "SLNT" var(--recursive-slnt),
@@ -59,9 +59,10 @@ body {
 }
 
 .container {
-    margin: var(--normal-margin);
-    margin-left: var(--side-margin);
-    margin-right: var(--side-margin);
+    max-width: 800px;
+    margin: 0 auto;
+    padding-left: var(--normal-margin);
+    padding-right: var(--normal-margin);
 }
 
 a {
@@ -143,23 +144,22 @@ pre {
     line-height: 1.4;
 }
 
-@media (max-width: 1200px) {
-    .container {
-        margin: var(--smol-normal-margin);
-        margin-left: var(--smol-side-margin);
-        margin-right: var(--smol-side-margin);
-    }
+code {
+    font-family: "Recursive", monospace;
+
+    --recursive-slnt: -2;
+    --recursive-casl: 0.8;
+    --recursive-crsv: 1;
+    --recursive-mono: 0.7;
+
+    font-variation-settings:
+        "SLNT" 0,
+        "CASL" 0.5,
+        "CRSV" 0.5,
+        "MONO" 1;
 }
 
 @media (max-width: 600px) {
-    .container {
-        margin: var(--smollest-normal-margin);
-        margin-left: var(--smollest-side-margin);
-        margin-right: var(--smollest-side-margin);
-    }
-}
-
-@media (max-width: 740px) {
     body {
         font-size: var(--smol-font-size);
     }
