@@ -1,18 +1,23 @@
 ---
 const { post } = Astro.props;
+
 import { formatDate, getReadingTime } from "../utils/util.ts";
 ---
 
 <div class="post">
-    <a href={`/posts/${post.slug}`}>{post.data.title}</a>
-    <br />
-    <span class="desc">{post.data.description}</span>
-    <br />
-    <span class="post-info">{formatDate(new Date(post.data.pubDate))} &#8226 {getReadingTime(post.body)} min read</span>
+    <img class="post-image" src={post.data.image.url} alt={post.data.image.alt} />
+    <div class="post-info" >
+        <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+        <br />
+        <span class="desc">{post.data.description}</span>
+        <br />
+        <span class="post-extra-info">{formatDate(new Date(post.data.pubDate))} &#8226 {getReadingTime(post.body)} min read</span>
+    </div>
 </div>
 
 <style>
     .post {
+        display: flex;
         border: 2px solid var(--accent-color);
         border-radius: 5px;
         padding: 25px;
@@ -27,8 +32,19 @@ import { formatDate, getReadingTime } from "../utils/util.ts";
     }
 
     .post-info {
+        flex: 1;
+    }
+
+    .post-extra-info {
         font-size: 0.9rem;
         color: var(--low-contrast-text);
+    }
+
+    .post-image {
+        flex: 1;
+        max-width: 120px;
+        max-height: 120px;
+        margin-right: var(--normal-margin)
     }
 
     .desc {
