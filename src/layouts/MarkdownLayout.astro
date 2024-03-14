@@ -40,8 +40,9 @@ import Footer from "../components/Footer.astro";
 
             <div class="container">
                 <h1>{frontmatter.title}</h1>
-                <i>Written on {formatDate(new Date(frontmatter.pubDate))} by {frontmatter.author}.</i></li>
-                A {minutesRead} minute read.
+                <i>Written on {formatDate(new Date(frontmatter.pubDate))} by {frontmatter.author}</i>
+                <i>&#8226;</i>
+                <i>{minutesRead} minute read.</i>
                 <slot />
 
                 <script src="https://giscus.app/client.js"

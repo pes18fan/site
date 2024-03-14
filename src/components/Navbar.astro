@@ -40,9 +40,15 @@
     .full-navbar {
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
         margin-bottom: 25px;
         font-size: 16px;
+    }
+
+    .terminal-logo {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     .terminal-prompt::after {
@@ -55,6 +61,7 @@
         -webkit-animation: cursor 1.5s infinite;
         animation: cursor 1.5s infinite;
         width: 8px;
+        border-radius: 5px;
     }
 
     .terminal-prompt::before {
@@ -99,6 +106,7 @@
     @media only screen and (max-width: 800px) {
         .full-navbar {
             flex-direction: column;
+            align-items: flex-start;
         }
 
         .terminal-menu {

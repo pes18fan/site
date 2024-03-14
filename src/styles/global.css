@@ -16,27 +16,22 @@
     --font-stack: "Recursive", monospace;
     --text-color: #eeeeeede;
     --low-contrast-text: #bbbbbbd0;
-    --global-font-size: 15px;
-    --global-heading-size: 28px;
+    --global-font-size: 16px;
+    --global-heading-size: 30px;
     --global-heading2-size: 24px;
     --global-heading3-size: 22px;
     --normal-margin: 20px;
-    --side-margin: 320px;
+    --line-height: 2;
 
     --smol-font-size: 14px;
-    --smol-heading-size: 24px;
+    --smol-heading-size: 26px;
     --smol-heading2-size: 20px;
     --smol-heading3-size: 18px;
-    --smol-normal-margin: 15px;
-    --smol-side-margin: 120px;
-
-    --smollest-normal-margin: 10px;
-    --smollest-side-margin: 25px;
 
     --recursive-slnt: -2;
     --recursive-casl: 0.8;
     --recursive-crsv: 1;
-    --recursive-mono: 0.7;
+    --recursive-mono: 0.4;
 
     font-variation-settings:
         "SLNT" var(--recursive-slnt),
@@ -93,11 +88,11 @@ a:hover::after {
 }
 
 /* For the RSS svg that is also a link. */
-.rss {
-    margin-left: 3px;
-}
+.rss-link {
+    color: #f08c31;   
+} 
 
-.rss::after {
+.rss-link::after {
     background-color: #f08c31;
 }
 
@@ -107,7 +102,7 @@ main {
 
 p {
     margin: 20px 0 20px 0;
-    line-height: 1.8;
+    line-height: var(--line-height);
     width: 100%;
     word-wrap: break-word;
     word-break: break-word;
@@ -126,7 +121,7 @@ h1 {
 
 h2 {
     font-size: var(--global-heading2-size);
-    margin: 20px 0 20px 0;
+    margin: 25px 0 25px 0;
     letter-spacing: 0.05rem;
 }
 

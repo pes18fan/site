@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import { formatDate, getReadingTime } from "../utils/util.ts";
 import PostLink from "./PostLink.astro";
 
 const posts = await getCollection("posts");
@@ -9,8 +8,7 @@ posts.sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
 
 <p>I can't really call this a blog, since my post frequency is incredibly low.
 Regardless, here's my... set of articles, where I just write about whatever
-I wish.
-<a href="/posts/rss.xml" class="rss"><img src="/assets/rss.svg" alt="RSS logo" /></a>
+I wish. You can get also grab the <a class="rss-link" href="/posts/rss.xml">RSS feed</a> if you wish.
 </p>
 
 <ul>
@@ -21,3 +19,6 @@ I wish.
     ))}
 </ul>
 
+<style>
+
+</style>
