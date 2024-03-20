@@ -32,13 +32,17 @@ export const GET: APIRoute = async () => {
 };
 
 async function updateCache() {
-    const response = await fetch(url);
-    const data = await response.json();
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
 
-    const track = data.recenttracks.track[0];
-    cache.artist = track.artist["#text"];
-    cache.track = track.name;
-    cache.playing = track["@attr"]?.nowplaying === "true";
+        const track = data.recenttracks.track[0];
+        cache.artist = track.artist["#text"];
+        cache.track = track.name;
+        cache.playing = track["@attr"]?.nowplaying === "true";
 
-    cachedDate = Date.now();
+        cachedDate = Date.now();
+    } catch(err) {
+        console.error(err);
+    }
 }
