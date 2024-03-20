@@ -28,16 +28,21 @@
     --smol-heading2-size: 20px;
     --smol-heading3-size: 18px;
 
-    --recursive-slnt: -2;
-    --recursive-casl: 0.8;
-    --recursive-crsv: 1;
-    --recursive-mono: 0.4;
+    --default-recursive-slnt: -2;
+    --default-recursive-casl: 1;
+    --default-recursive-crsv: 1;
+    --default-recursive-mono: 0.6;
 
     font-variation-settings:
-        "SLNT" var(--recursive-slnt),
-        "CASL" var(--recursive-casl),
-        "CRSV" var(--recursive-crsv),
-        "MONO" var(--recursive-mono);
+        "SLNT" var(--default-recursive-slnt),
+        "CASL" var(--default-recursive-casl),
+        "CRSV" var(--default-recursive-crsv),
+        "MONO" var(--default-recursive-mono);
+
+    --mono-recursive-slnt: 0;
+    --mono-recursive-casl: 0.5;
+    --mono-recursive-crsv: 0.5;
+    --mono-recursive-mono: 1;
 }
 
 * {
@@ -140,18 +145,11 @@ pre {
 }
 
 code {
-    font-family: "Recursive", monospace;
-
-    --recursive-slnt: -2;
-    --recursive-casl: 0.8;
-    --recursive-crsv: 1;
-    --recursive-mono: 0.7;
-
     font-variation-settings:
-        "SLNT" 0,
-        "CASL" 0.5,
-        "CRSV" 0.5,
-        "MONO" 1;
+        "SLNT" var(--mono-recursive-mono),
+        "CASL" var(--mono-recursive-mono),
+        "CRSV" var(--mono-recursive-mono),
+        "MONO" var(--mono-recursive-mono);
 }
 
 @media (max-width: 600px) {
