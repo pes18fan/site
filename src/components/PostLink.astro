@@ -5,7 +5,6 @@ import { formatDate, getReadingTime } from "../utils/util.ts";
 ---
 
 <div class="post">
-    <img class="post-image" src={post.data.image.url} alt={post.data.image.alt} />
     <div class="post-info" >
         <a href={`/posts/${post.slug}`}>{post.data.title}</a>
         <br />
@@ -38,14 +37,6 @@ import { formatDate, getReadingTime } from "../utils/util.ts";
     .post-extra-info {
         font-size: 0.9rem;
         color: var(--low-contrast-text);
-    }
-
-    .post-image {
-        flex: 1;
-        max-width: 120px;
-        max-height: 140px;
-        margin-right: var(--normal-margin);
-        border-radius: 5px;
     }
 
     .desc {
