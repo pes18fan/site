@@ -23,6 +23,5 @@
     "sanitize-html": "^2.12.1",
     "svelte": "^4.2.12"
   },
-  "license": "MIT",
-  "packageManager": "yarn@4.1.1"
+  "license": "MIT"
 }
