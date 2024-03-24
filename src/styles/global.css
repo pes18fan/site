@@ -152,6 +152,18 @@ code {
         "MONO" var(--mono-recursive-mono);
 }
 
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+}
+
 @media (max-width: 600px) {
     body {
         font-size: var(--smol-font-size);
