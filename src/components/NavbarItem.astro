@@ -1,0 +1,25 @@
+---
+const { link, name } = Astro.props;
+---
+
+<li>
+    <a href={link} class="nav-list-item">{name}</a>
+</li>
+
+<style>
+    .nav-list-item {
+        color: var(--low-contrast-text);
+        transition: color 300ms ease;
+        position: relative;
+        margin-right: 40px;
+        cursor: pointer;
+    }
+
+    .nav-list-item::after {
+        width: 0 !important;
+    }
+
+    .nav-list-item:hover {
+        color: var(--text-color);
+    }
+</style>

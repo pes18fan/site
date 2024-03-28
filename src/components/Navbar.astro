@@ -1,3 +1,7 @@
+---
+import NavbarItem from "./NavbarItem.astro";
+---
+
 <div class="container">
     <div class="full-navbar">
         <header class="terminal-logo">
@@ -8,15 +12,9 @@
         </header>
         <nav class="terminal-menu">
             <ul>
-                <li>
-                    <a href="/posts" class="nav-list-item"> posts/</a>
-                </li>
-                <li>
-                    <a href="/stuff" class="nav-list-item"> stuff/</a>
-                </li>
-                <li>
-                    <a href="/about" class="nav-list-item"> about/</a>
-                </li>
+                <NavbarItem name="posts/" link="/posts" />
+                <NavbarItem name="stuff/" link="/stuff" />
+                <NavbarItem name="about/" link="/about" />
             </ul>
         </nav>
     </div>
@@ -80,33 +78,14 @@
 
     .terminal-menu ul {
         display: flex;
-        justify-content: flex-end;
-        justify-items: flex-end;
+        justify-content: flex-start;
+        align-items: flex-end;
         flex-direction: row;
         justify-content: left;
         margin-top: 0;
         list-style-type: none;
         padding: 0 !important;
         width: 100%;
-    }
-
-    .terminal-menu ul li {
-        position: relative;
-        margin-right: 40px;
-        cursor: pointer;
-    }
-
-    .nav-list-item {
-        color: var(--low-contrast-text);
-        transition: color 300ms ease;
-    }
-
-    .nav-list-item::after {
-        width: 0 !important;
-    }
-
-    .nav-list-item:hover {
-        color: var(--text-color);
     }
 
     @media only screen and (max-width: 800px) {
