@@ -3,7 +3,15 @@ const { link, name } = Astro.props;
 ---
 
 <li>
-    <a href={link} class="nav-list-item">{name}</a>
+    {
+        Astro.url.pathname == link ? (
+            <span class="nav-list-item active">{name}</span>
+        ) : (
+            <a href={link} class="nav-list-item">
+                {name}
+            </a>
+        )
+    }
 </li>
 
 <style>
@@ -20,6 +28,15 @@ const { link, name } = Astro.props;
     }
 
     .nav-list-item:hover {
+        color: var(--accent-color);
+    }
+
+    .active {
+        color: var(--text-color);
+        cursor: auto;
+    }
+
+    .active:hover {
         color: var(--text-color);
     }
 </style>
