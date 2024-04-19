@@ -16,22 +16,22 @@
     --font-stack: "Recursive", monospace;
     --text-color: #eeeeeede;
     --low-contrast-text: #bbbbbbd0;
-    --global-font-size: 16px;
+    --global-font-size: 18px;
     --global-heading-size: 30px;
     --global-heading2-size: 24px;
     --global-heading3-size: 22px;
     --normal-margin: 20px;
     --line-height: 2;
 
-    --smol-font-size: 14px;
+    --smol-font-size: 16px;
     --smol-heading-size: 26px;
     --smol-heading2-size: 20px;
     --smol-heading3-size: 18px;
 
     --default-recursive-slnt: -2;
-    --default-recursive-casl: 1;
+    --default-recursive-casl: 0.8;
     --default-recursive-crsv: 1;
-    --default-recursive-mono: 0.6;
+    --default-recursive-mono: 0.4;
 
     font-variation-settings:
         "SLNT" var(--default-recursive-slnt),
