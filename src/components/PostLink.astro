@@ -5,12 +5,16 @@ import { formatDate, getReadingTime } from "../utils/util.ts";
 ---
 
 <div class="post">
-    <div class="post-info" >
+    <div class="post-info">
         <a href={`/posts/${post.slug}`}>{post.data.title}</a>
         <br />
         <span class="desc">{post.data.description}</span>
         <br />
-        <span class="post-extra-info">{formatDate(new Date(post.data.pubDate))} &#8226 {getReadingTime(post.body)} min read</span>
+        <span class="post-extra-info"
+            >{formatDate(new Date(post.data.pubDate))} &#8226 {
+                getReadingTime(post.body)
+            } min read</span
+        >
     </div>
 </div>
 
@@ -40,6 +44,6 @@ import { formatDate, getReadingTime } from "../utils/util.ts";
     }
 
     .desc {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 </style>

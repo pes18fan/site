@@ -7,11 +7,26 @@ export const prerender = false;
 <div class="container">
     <footer>
         <div class="footer-info">
-            <p>Powered by <a href="https://astro.build" target="_blank">Astro</a>.</p>
-            <p>Site <a href="https://github.com/pes18fan/site/">source</a> under <a href="https://raw.githubusercontent.com/pes18fan/site/main/LICENSE" target="_blank">MIT</a>.</p>
-            <p>Site content under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-NC-SA-4.0</a>.</p>
+            <p>
+                Powered by <a href="https://astro.build" target="_blank"
+                    >Astro</a
+                >.
+            </p>
+            <p>
+                Site <a href="https://github.com/pes18fan/site/">source</a> under
+                <a
+                    href="https://raw.githubusercontent.com/pes18fan/site/main/LICENSE"
+                    target="_blank">MIT</a
+                >.
+            </p>
+            <p>
+                Site content under <a
+                    href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                    >CC-BY-NC-SA-4.0</a
+                >.
+            </p>
         </div>
-        { Astro.url.pathname === "/" ? <MusicInfo client:load /> : null }
+        {Astro.url.pathname === "/" ? <MusicInfo client:load /> : null}
     </footer>
 </div>
 
@@ -35,11 +50,5 @@ export const prerender = false;
     p {
         margin: 0;
         margin-bottom: 5px;
-    }
-
-    @media only screen and (max-width: 780px) {
-        footer {
-            font-size: 12px;
-        }
     }
 </style>
