@@ -1,23 +1,61 @@
 ---
 import NavbarItem from "./NavbarItem.astro";
+
+const pathname = Astro.url.pathname;
+const split = pathname.split("/");
+
+/* First is also discarded because the pathname is like /a/b/c and thus the first
+ * one is just an empty string. */
+const splitExceptLast = split.slice(1, split.length - 1);
 ---
 
 <div class="container">
     <div class="full-navbar">
-        <header class="terminal-logo">
-            <div class="terminal-prompt">
-                <a href="/" class="site-name">pes18fan</a>:~$
-                {Astro.url.pathname}
-            </div>
+        <header class="site-name">
+            <span class="pathname"
+                >{
+                    pathname == "/" ? (
+                        "pes18fan"
+                    ) : (
+                        <div class="sub-path-container">
+                            <span class="uname">
+                                <>
+                                    <a href="/">pes18fan</a>
+                                    <span>/</span>
+                                </>
+                                {"/"}
+                                {splitExceptLast.map((str, idx) => {
+                                    return (
+                                        <>
+                                            {/* DO NOT CHANGE FORMATTING HERE OR STYLE WILL BREAK */}
+                                            <a
+                                                href={split
+                                                    .slice(0, idx - 1)
+                                                    .join("/")}
+                                            >{str}</a>
+                                            <span>/</span>
+                                        </>
+                                    );
+                                })}
+                            </span>
+                            <span class="sub-path">
+                                {split[split.length - 1]}
+                            </span>
+                        </div>
+                    )
+                }</span
+            >
         </header>
-        <nav class="terminal-menu">
+        <nav class="links">
             <ul>
-                <NavbarItem name="posts/" link="/posts" />
-                <NavbarItem name="stuff/" link="/stuff" />
-                <NavbarItem name="about/" link="/about" />
+                <NavbarItem name="posts" link="/posts" />
+                <NavbarItem name="stuff" link="/stuff" />
+                <NavbarItem name="about" link="/about" />
             </ul>
         </nav>
     </div>
+
+    <hr />
 </div>
 
 <style>
@@ -37,10 +75,9 @@ import NavbarItem from "./NavbarItem.astro";
 
     .full-navbar {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 25px;
-        font-size: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
 
         font-variation-settings:
             "SLNT" var(--mono-recursive-mono),
@@ -49,34 +86,36 @@ import NavbarItem from "./NavbarItem.astro";
             "MONO" var(--mono-recursive-mono);
     }
 
-    .terminal-logo {
+    .site-name {
         display: flex;
         flex-direction: row;
         align-items: center;
+        font-size: 24px;
+        padding: var(--normal-margin) 0 0;
     }
 
-    .terminal-prompt::after {
-        content: "";
-        background: var(--accent-color);
-        display: inline-block;
-        height: 1em;
-        bottom: -2px;
-        position: relative;
-        -webkit-animation: cursor 1.5s infinite;
-        animation: cursor 1.5s infinite;
-        width: 8px;
-        border-radius: 5px;
+    .sub-path-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        line-height: 1.2em;
     }
 
-    .terminal-prompt::before {
-        content: none;
+    .uname {
+        font-size: 0px;
     }
 
-    .terminal-menu {
-        margin-left: auto;
+    .uname a,
+    .uname span {
+        font-size: 16px;
     }
 
-    .terminal-menu ul {
+    .links {
+        padding: 10px 0 0;
+    }
+
+    .links ul {
         display: flex;
         justify-content: flex-start;
         align-items: flex-end;
@@ -88,27 +127,13 @@ import NavbarItem from "./NavbarItem.astro";
         width: 100%;
     }
 
-    @media only screen and (max-width: 800px) {
-        .full-navbar {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .terminal-menu {
-            margin-top: 10px;
-            margin-left: 0;
-        }
+    hr {
+        margin: 10px 0 0;
     }
 
     @media only screen and (max-width: 600px) {
-        .terminal-menu li {
+        .links li {
             margin-right: 30px;
-        }
-
-        .site-name {
-            width: 3ch;
-            overflow: hidden;
-            display: inline-block;
         }
     }
 </style>
