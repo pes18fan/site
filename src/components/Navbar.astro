@@ -78,6 +78,10 @@ const pathnameSliced = pathname.slice(
         justify-content: flex-start;
     }
 
+    .terminal-prompt {
+        line-height: var(--line-height);
+    }
+
     .terminal-prompt::after {
         content: "";
         background: var(--accent-color);
@@ -131,7 +135,6 @@ const pathnameSliced = pathname.slice(
         .site-name {
             width: 3ch;
             overflow: hidden;
-            display: inline-block;
         }
     }
 </style>
