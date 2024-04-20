@@ -9,6 +9,9 @@ pubDate: 2024-03-23
 slug: "ad_to_bs"
 ---
 
+import { Image } from "astro:assets";
+import ncal from "../../images/ncal.png";
+
 In Nepal, the [Bikram Sambat](https://en.wikipedia.org/wiki/Vikram_Sambat) calendar
 sees very common use. Therefore, conversions between AD and BS are done often,
 and a lot of the time people have no idea what is going on under the hood to get
@@ -17,7 +20,7 @@ little terminal app called [ncal](https://github.com/pes18fan/ncal), which is a
 very basic, small calendar for BS. It looks like this:
 
 <div class="img-container">
-    <img src="/assets/ncal.png" alt="ncal running on WezTerm" />
+    <Image src={ncal} alt="ncal running in WezTerm" />
 </div>
 
 I plan on adding a few more features and probably
