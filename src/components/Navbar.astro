@@ -2,6 +2,12 @@
 import NavbarItem from "./NavbarItem.astro";
 
 const pathname = Astro.url.pathname;
+const pathnameSliced = pathname.slice(
+    1,
+    pathname[pathname.length - 1] == "/"
+        ? pathname.length - 1
+        : pathname.length,
+);
 ---
 
 <div class="container">
@@ -12,14 +18,15 @@ const pathname = Astro.url.pathname;
                 {">"}
                 {
                     // This is basically a switch expression lol
+                    // prettier-ignore
                     {
-                        "/": <span>cat /etc/motd</span>,
-                        "/about": <span>whoami</span>,
-                        "/posts": <span>cd posts/</span>,
-                    }[pathname] || (
+                        "": <span>cat /etc/motd</span>,
+                        about: <span>whoami</span>,
+                        posts: <span>cd posts/</span>,
+                    }[pathnameSliced] || (
                         <span>
                             open
-                            {pathname.slice(1, pathname.length)}.html
+                            {pathnameSliced}.html
                         </span>
                     )
                 }
