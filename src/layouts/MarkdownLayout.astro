@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { formatDate, getReadingTime } from "../utils/util.ts"
+import { formatDate, getReadingTime } from "../utils/util.ts";
 
 const { post } = Astro.props;
 
@@ -24,10 +24,7 @@ import Footer from "../components/Footer.astro";
         <meta property="og:url" content="https://p18f.vercel.app/" />
         <meta property="og:image" content={frontmatter.image.url} />
         <meta property="og:title" content={frontmatter.title} />
-        <meta
-            property="og:description"
-            content={frontmatter.description}
-        />
+        <meta property="og:description" content={frontmatter.description} />
         <meta property="og:type" content="website" />
         <link rel="icon" href="/favicon.ico" />
         <meta name="generator" content={Astro.generator} />
@@ -40,12 +37,17 @@ import Footer from "../components/Footer.astro";
 
             <div class="container">
                 <h1>{frontmatter.title}</h1>
-                <i>Written on {formatDate(new Date(frontmatter.pubDate))} by {frontmatter.author}</i>
+                <i
+                    >Written on {formatDate(new Date(frontmatter.pubDate))} by {
+                        frontmatter.author
+                    }</i
+                >
                 <i>&#8226;</i>
                 <i>{minutesRead} minute read.</i>
                 <slot />
 
-                <script src="https://giscus.app/client.js"
+                <script
+                    src="https://giscus.app/client.js"
                     data-repo="pes18fan/site-comments"
                     data-repo-id="R_kgDOLclMiw"
                     data-category="Announcements"
@@ -59,8 +61,7 @@ import Footer from "../components/Footer.astro";
                     data-lang="en"
                     data-loading="lazy"
                     crossorigin="anonymous"
-                    async>
-                </script>
+                    async></script>
             </div>
 
             <Footer />

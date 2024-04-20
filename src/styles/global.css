@@ -10,12 +10,12 @@
 
 :root {
     --background-color: #181818;
-    --secondary-color: #222222;
+    --secondary-color: #242424;
     --tertiary-color: #262626;
     --accent-color: #4fefcade;
     --font-stack: "Recursive", monospace;
     --text-color: #eeeeeede;
-    --low-contrast-text: #bbbbbbd0;
+    --low-contrast-text: #bbbbbbde;
     --global-font-size: 18px;
     --global-heading-size: 30px;
     --global-heading2-size: 24px;
