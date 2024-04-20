@@ -41,7 +41,7 @@
 
     --mono-recursive-slnt: 0;
     --mono-recursive-casl: 0.5;
-    --mono-recursive-crsv: 0.5;
+    --mono-recursive-crsv: 0;
     --mono-recursive-mono: 1;
 }
 

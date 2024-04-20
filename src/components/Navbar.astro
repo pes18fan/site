@@ -1,16 +1,31 @@
 ---
 import NavbarItem from "./NavbarItem.astro";
+
+const pathname = Astro.url.pathname;
 ---
 
 <div class="container">
     <div class="full-navbar">
-        <header class="terminal-logo">
+        <header class="terminal">
             <div class="terminal-prompt">
-                <a href="/" class="site-name">pes18fan</a>:~$
-                {Astro.url.pathname}
+                <a href="/" class="site-name">pes18fan</a>
+                {">"}
+                {
+                    // This is basically a switch expression lol
+                    {
+                        "/": <span>cat /etc/motd</span>,
+                        "/about": <span>whoami</span>,
+                        "/posts": <span>cd posts/</span>,
+                    }[pathname] || (
+                        <span>
+                            open
+                            {pathname.slice(1, pathname.length)}.html
+                        </span>
+                    )
+                }
             </div>
         </header>
-        <nav class="terminal-menu">
+        <nav class="links">
             <ul>
                 <NavbarItem name="posts/" link="/posts" />
                 <NavbarItem name="stuff/" link="/stuff" />
@@ -49,10 +64,11 @@ import NavbarItem from "./NavbarItem.astro";
             "MONO" var(--mono-recursive-mono);
     }
 
-    .terminal-logo {
+    .terminal {
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: flex-start;
     }
 
     .terminal-prompt::after {
@@ -60,23 +76,23 @@ import NavbarItem from "./NavbarItem.astro";
         background: var(--accent-color);
         display: inline-block;
         height: 1em;
-        bottom: -2px;
+        bottom: -2.5px;
         position: relative;
         -webkit-animation: cursor 1.5s infinite;
         animation: cursor 1.5s infinite;
         width: 8px;
-        border-radius: 5px;
+        border-radius: 4px;
     }
 
     .terminal-prompt::before {
         content: none;
     }
 
-    .terminal-menu {
+    .links {
         margin-left: auto;
     }
 
-    .terminal-menu ul {
+    .links ul {
         display: flex;
         justify-content: flex-start;
         align-items: flex-end;
@@ -94,14 +110,14 @@ import NavbarItem from "./NavbarItem.astro";
             align-items: flex-start;
         }
 
-        .terminal-menu {
+        .links {
             margin-top: 10px;
             margin-left: 0;
         }
     }
 
     @media only screen and (max-width: 600px) {
-        .terminal-menu li {
+        .links li {
             margin-right: 30px;
         }
 
