@@ -114,14 +114,14 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     --font-stack: "Recursive", monospace;
     --text-color: #eeeeeede;
     --low-contrast-text: #bbbbbbde;
-    --global-font-size: 18px;
-    --global-heading-size: 30px;
+    --global-font-size: 16px;
+    --global-heading-size: 32px;
     --global-heading2-size: 24px;
     --global-heading3-size: 22px;
     --normal-margin: 20px;
     --line-height: 2;
 
-    --smol-font-size: 16px;
+    --smol-font-size: 14px;
     --smol-heading-size: 26px;
     --smol-heading2-size: 20px;
     --smol-heading3-size: 18px;
@@ -218,7 +218,7 @@ ul {
 
 h1 {
     font-size: var(--global-heading-size);
-    margin: 30px 0 30px 0;
+    margin: var(--normal-margin) 0;
     letter-spacing: 0.1rem;
 }
 
