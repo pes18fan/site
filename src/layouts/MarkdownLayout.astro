@@ -36,14 +36,18 @@ import Footer from "../components/Footer.astro";
             <Navbar />
 
             <div class="container">
-                <h1>{frontmatter.title}</h1>
-                <i
-                    >Written on {formatDate(new Date(frontmatter.pubDate))} by {
-                        frontmatter.author
-                    }</i
-                >
-                <i>&#8226;</i>
-                <i>{minutesRead} minute read.</i>
+                <div class="post-head">
+                    <h1 class="post-title">{frontmatter.title}</h1>
+                    <div class="post-info">
+                        <i
+                            >Written on {formatDate(new Date(frontmatter.pubDate))} by {
+                                frontmatter.author
+                            }</i
+                        >
+                        <i>&#8226;</i>
+                        <i>{minutesRead} minute read.</i>
+                    </div>
+                </div>
                 <slot />
 
                 <script
@@ -70,7 +74,17 @@ import Footer from "../components/Footer.astro";
 </html>
 
 <style>
-    i {
-        font-size: 14px;
+    .post-head {
+        margin: var(--normal-margin) 0;
+    }
+
+    .post-title {
+        text-align: center;
+    }
+
+    .post-info {
+        font-size: var(--smol-font-size);
+        text-align: center;
+        margin: var(--normal-margin) 0;
     }
 </style>
