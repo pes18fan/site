@@ -12,6 +12,10 @@ let cachedDate: ReturnType<typeof Date.now> = 0;
 const username = "***REMOVED***";
 const apiKey = import.meta.env.LASTFM_API_KEY;
 
+if (apiKey === undefined) {
+    throw new Error("Last.fm api key is not defined");
+}
+
 const url = new URL("https://ws.audioscrobbler.com/2.0");
 url.searchParams.set("method", "user.getRecentTracks");
 url.searchParams.set("user", username);
@@ -42,7 +46,7 @@ async function updateCache() {
         cache.playing = track["@attr"]?.nowplaying === "true";
 
         cachedDate = Date.now();
-    } catch(err) {
+    } catch (err) {
         console.error(err);
     }
 }
