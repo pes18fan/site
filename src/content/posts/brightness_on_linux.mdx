@@ -1,0 +1,56 @@
+---
+title: Making brightness work on Linux
+author: pes18fan
+description: "Quick guide to protect your eyes."
+image:
+  url: "#"
+  alt: "No image."
+pubDate: 2024-06-05
+slug: "brightness-on-linux"
+---
+
+I recently switched entirely to Linux, specifically Arch, due to issues I had
+been facing as of late on Windows. When I tried reinstalling Windows, all my
+drivers were gone including wifi drivers and I couldn't get them working again,
+so I decided to just use Linux where the drivers just worked. Funny, considering
+I use an NVIDIA GPU.
+
+Anyways, even before this I had been trying Linux out in dual boot and stuff.
+I enjoyed it quite a bit, but there was one glaring issue: brightness couldn't
+be adjusted. There didn't seem to be any error or anything that described why
+this happened, so I just lived with it while using the
+[AlphaTint GNOME extension](https://github.com/saifulbkhan/alpha-tint) to
+artificially change brightness.
+
+That was until recently. I assume many of you know of [systemd](https://systemd.io/).
+It's a suite of programs that basically opens from the bootloader and starts all
+necessary aspects of the system. Some like it, some hate it, I personally don't
+care much. Regardless, the hackerman-like wall of text you get in some
+distros when they boot up and shut down is a log of what systemd is doing.
+
+Within this wall of text, I, by accident, discovered a bit of text that said "backlight" 
+and "nvidia". I instantly realized that this might be a log of an error regarding the
+screen backlight, and [of course it's goddamn NVIDIA](https://www.youtube.com/watch?v=iYWzMvlj2RQ).
+I looked into this, and thankfully found a bit of info from the Arch Wiki about this.
+I had to set some kernel parameters to get it to work. Set one of these three and
+see which one works:
+
+```
+acpi_backlight=video
+acpi_backlight=vendor
+acpi_backlight=native
+```
+
+To set a kernel parameter, first find the configuration file for
+your bootloader. In my case, for `systemd-boot`, it should be in `/boot/loader/entries`.
+The bootloader config file's name seems to depend on the distro. For Arch Linux, 
+most sites will say it's named `arch.conf`, but in my case I used `archinstall`,
+so the file was named something like `YYYY-MM-DD_XX-XX-XX_linux.conf`, which includes
+the date you installed Arch Linux and the `X`s are replaced with some numbers 
+that I couldn't really tell the meaning of. Perhaps they were the time or something.
+
+In my case, the `native` parameter was the one that worked. What a relief.
+
+If it's not working for you still, you can check out the whole [backlight page on
+the Arch Wiki](https://wiki.archlinux.org/title/backlight). Even if you don't use
+Arch this may be of help.
