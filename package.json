@@ -10,18 +10,19 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "2.1.1",
+    "@astrojs/mdx": "3.1.9",
     "@astrojs/rss": "4.0.5",
     "@astrojs/svelte": "^5.2.0",
     "@astrojs/vercel": "^7.3.4",
     "@types/marked": "^4.0.8",
     "@types/sanitize-html": "^2.9.0",
-    "astro": "4.4.9",
+    "astro": "4.16.10",
     "marked": "^4.3.0",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-to-string": "^4.0.0",
     "sanitize-html": "^2.12.1",
     "svelte": "^4.2.12"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }
