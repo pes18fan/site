@@ -8,17 +8,28 @@ image:
 pubDate: 2023-04-10
 ---
 
-So recently, I found this awesome video by [Low Level Learning](https://www.youtube.com/@LowLevelLearning) where he speaks on singly linked lists ([the video](https://www.youtube.com/watch?v=dti0F7w3yOQ)). With my terrible, or should I say, almost non-existent knowledge of data structures, I decided to follow the video to learn about one of them. The code in the video was written in C, however I wanted to be ✨*different*✨ and to use another language. I picked Crystal, mainly because:
+So recently, I found this awesome video by [Low Level Learning](https://www.youtube.com/@LowLevelTV)
+where he speaks on singly linked lists (unfortunately the video is unavailable as of January 2025).
+With my terrible, or should I say, almost non-existent knowledge of data structures,
+I decided to follow the video to learn about one of them. The code in the video 
+was written in C, however I wanted to be ✨*different*✨ and to use another language.
+I picked Crystal, mainly because:
 
 - \- I wanted to use a different language, as I said, so that I don't end up just copy pasting everything into C.
 - \- Rust was an alternative but I'm really not good at it at all.
 - \- I like Crystal and have used it before.
 
-This was the start of a very interesting journey (should I even call it journey? It was done in a few hours, after all...). Well, in either case, I'll recap what happened here. While the code might be in Crystal, I'll be trying to explain it in a language-agnostic way, so I hope this helps other people to learn a bit about how singly linked lists (I'll call them SLLs from here since the phrase is too long) work.
+This was the start of a very interesting journey (should I even call it journey?
+It was done in a few hours, after all...). Well, in either case, I'll recap what
+happened here. While the code might be in Crystal, I'll be trying to explain it 
+in a language-agnostic way, so I hope this helps other people to learn a bit 
+about how singly linked lists (I'll call them SLLs from here since the phrase is too long) work.
 
 ## humble beginnings
 
-Everything began with the definition of a `struct` for a node. In a SLL, every item is called a node, which each has a pointer to the next item in the list. This was fairly straightforward:
+Everything began with the definition of a `struct` for a node. In a SLL, every 
+item is called a node, which each has a pointer to the next item in the list. 
+This was fairly straightforward:
 
 ```crystal
 struct Node
