@@ -96,7 +96,8 @@ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 */
 
-/* The bare minimum English subset, plus copyright & arrows (← ↑ → ↓) & quotes (“ ” ‘ ’) & bullet (•) */
+/* The bare minimum English subset, plus copyright & arrows (← ↑ → ↓) & quotes 
+ * (“ ” ‘ ’) & bullet (•) */
 @font-face {
     font-family: 'Recursive';
     font-style: oblique 0deg 15deg;
