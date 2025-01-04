@@ -41,7 +41,9 @@ for that purpose. The graph may be either directed or undirected.
 
 Let's take this graph:
 
-<Image src={graphImage} alt="An illustration of a graph with four nodes labeled 0 through 4." />
+<div class="img-container">
+    <Image src={graphImage} alt="An illustration of a graph with four nodes labeled 0 through 4." />
+</div>
 
 Someone asks you, "Hey, what's the shortest path between 0 and 4?" You can just
 take a look at the graph and quickly notice, it's `0-2-4` among the three possible
@@ -184,7 +186,9 @@ This is a process known as *relaxation*.
 Sounded like a jumble of words? Okay, so here's a portion of the above graph,
 consisting only of the connection between nodes 0 and 1 to demonstrate:
 
-<Image src={relaxation} alt="A portion of a bigger graph, with two nodes 0 and 1 separated by a weight of 1." />
+<div class="img-container">
+    <Image src={relaxation} alt="A portion of a bigger graph, with two nodes 0 and 1 separated by a weight of 1." />
+</div>
 
 1 has a `distance` of infinity because it's set that way to begin with, and node
 0 has one of 0 since it's the source. Now, if the function `d(x)` gives the
