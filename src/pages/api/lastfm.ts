@@ -9,7 +9,7 @@ const cache = {
 };
 let cachedDate: ReturnType<typeof Date.now> = 0;
 
-const username = "***REMOVED***";
+const username = import.meta.env.LASTFM_USERNAME;
 const apiKey = import.meta.env.LASTFM_API_KEY;
 
 if (apiKey === undefined) {
