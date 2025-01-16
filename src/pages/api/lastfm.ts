@@ -13,7 +13,11 @@ const username = import.meta.env.LASTFM_USERNAME;
 const apiKey = import.meta.env.LASTFM_API_KEY;
 
 if (apiKey === undefined) {
-    throw new Error("Last.fm api key is not defined");
+    throw new Error("Last.fm api key isn't defined");
+}
+
+if (username === undefined) {
+    throw new Error("Last.fm username isn't defined")
 }
 
 const url = new URL("https://ws.audioscrobbler.com/2.0");
