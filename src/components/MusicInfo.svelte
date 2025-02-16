@@ -10,7 +10,7 @@ async function getTrack() {
 <div class="music-info">
 {#await getTrack() then value}
 {#if value.playing}
-    <p><b>Now playing</b></p>
+    <p><b>Listening to</b></p>
     <p>{value.track}</p>
     <p>by {value.artist}.</p>
 {:else}

@@ -1,10 +1,10 @@
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toString } from "mdast-util-to-string";
 
-export function formatDate(date: Date) {
+export function formatDate(date: Date): string {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Jul",
         "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+    return `${months[date.getMonth()]}. ${date.getDate()}, ${date.getFullYear()}`;
 }
 
 export function getReadingTime(text: string): (string | undefined) {
@@ -26,6 +26,6 @@ function calculateWordCount(text: string): number {
     return text.split(/\s+/).length;
 }
 
-function calculateReadingTime(wordCount: number) {
+function calculateReadingTime(wordCount: number): number {
     return Math.ceil(wordCount / 220);
 }
