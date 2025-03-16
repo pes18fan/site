@@ -17,7 +17,7 @@ if (apiKey === undefined) {
 }
 
 if (username === undefined) {
-    throw new Error("Last.fm username isn't defined")
+    throw new Error("Last.fm username isn't defined");
 }
 
 const url = new URL("https://ws.audioscrobbler.com/2.0");
