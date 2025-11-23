@@ -16,7 +16,7 @@
     "@astrojs/vercel": "^8.0.1",
     "@types/marked": "^4.3.2",
     "@types/sanitize-html": "^2.13.0",
-    "astro": "5.1.2",
+    "astro": "5.15.9",
     "marked": "^4.3.0",
     "mdast-util-from-markdown": "^2.0.2",
     "mdast-util-to-string": "^4.0.0",
