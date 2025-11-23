@@ -128,9 +128,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     --smol-heading3-size: 18px;
 
     --default-recursive-slnt: -2;
-    --default-recursive-casl: 0.8;
+    --default-recursive-casl: 0.6;
     --default-recursive-crsv: 1;
-    --default-recursive-mono: 0.4;
+    --default-recursive-mono: 0.2;
 
     font-variation-settings:
         "SLNT" var(--default-recursive-slnt),
@@ -243,12 +243,18 @@ pre {
     line-height: 1.4;
 }
 
-code {
+pre code {
     font-variation-settings:
         "SLNT" var(--mono-recursive-mono),
         "CASL" var(--mono-recursive-mono),
         "CRSV" var(--mono-recursive-mono),
         "MONO" var(--mono-recursive-mono);
+}
+
+:not(pre) > code {
+    background: var(--secondary-color);
+    padding: 3px;
+    border-radius: 3px;
 }
 
 .img-container {
