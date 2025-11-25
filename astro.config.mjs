@@ -11,6 +11,7 @@ const kazeGrammar = JSON.parse(
 // https://astro.build/config
 export default defineConfig({
     markdown: {
+        syntaxHighlight: "shiki",
         shikiConfig: {
             theme: "catppuccin-mocha",
             langs: [
