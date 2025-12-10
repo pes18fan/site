@@ -29,7 +29,7 @@ off via the power key. It turned off succesfully, and I turned it on again to
 get back to it.
 
 Lo and behold, the computer failed to boot up to the GUI. The bootup `systemd`
-logs were weird; NetworkManager had failed to start for whatever reason and
+logs were weird; `NetworkManager` had failed to start for whatever reason and
 instead of the logs clearing the way for SDDM like before, the screen just
 got stuck there. After a bit of confusion, I got into a rescue shell and checked
 the `systemd` journals... then I found this.

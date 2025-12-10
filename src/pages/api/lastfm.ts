@@ -51,6 +51,7 @@ async function updateCache() {
 
         cachedDate = Date.now();
     } catch (err) {
+        console.error("failed to update cache because of error.");
         console.error(err);
     }
 }
