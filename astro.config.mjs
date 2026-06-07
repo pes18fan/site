@@ -7,6 +7,9 @@ import vercel from "@astrojs/vercel";
 const kazeGrammar = JSON.parse(
     readFileSync("./public/assets/kaze.tmLanguage.json"),
 );
+const zenGrammar = JSON.parse(
+    readFileSync("./public/assets/zen.tmLanguage.json"),
+);
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,6 +23,12 @@ export default defineConfig({
                     scopeName: "source.kaze",
                     grammar: kazeGrammar,
                     aliases: ["kaze"],
+                },
+                {
+                    id: "zen_lang",
+                    scopeName: "source.zen",
+                    grammar: zenGrammar,
+                    aliases: ["zen_lang"],
                 },
                 "javascript",
                 "lua",

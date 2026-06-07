@@ -1,0 +1,593 @@
+---
+title: "achieving true zen pt. 1: everything is an expression"
+author: pes18fan
+description: "How do you interpret an imperative language as only expressions?"
+image:
+    url: "#"
+    alt: "No image."
+pubDate: 2026-05-29
+---
+
+> *This article is part of a series.*
+
+In 2023, I read this little book called [Crafting Interpreters](https://craftinginterpreters.com)
+written by Bob Nystrom, intrigued by the concept of PL design and compilers.
+As the book intended, I worked parallely on writing the two interpreters designed 
+in the book over the course of reading it. The first one, `jlox`, I designed
+as a Crystal interpreter named `kaze`. I've talked about in a previous blog,
+where I described [how one could design a language to avoid semicolon terminators](./no_semicolons.mdx).
+But the second interpreter, `clox`, is where it got interesting for me. My
+implementation was now written in Odin, named [`zen`](https://github.com/pes18fan/zen).
+
+Initially, it was just another form of `clox` with some small design differences,
+most notably the avoidance of semicolons, albeit in a different way as was
+described in my article, as I used automatic semicolon insertion (ASI) for it.
+However as the years passed, I just kept adding more and more features that
+were not in the toy language `clox`, like anonymous functions, lists, a featureful
+standard library, and proper modules, making it suspiciously like an actually
+useful programming language. This year, I finally shed the single-pass nature
+of `clox` for a real abstract syntax tree (AST); unlocking so much more
+possibilities for the language.
+
+I now have decided on four concrete steps on how I can "achieve true zen".
+The first one is: making everything an expression.
+
+# But why?
+
+There are two main reasons behind it.
+
+Firstly, I think that it's just a really elegant design. Isn't something like
+
+```zen_lang
+var something = if cond {
+    thing
+} else {
+    fallback
+}
+```
+
+a much cleaner design than the following?
+
+```zen_lang
+var something = thing
+if not cond {
+    something = fallback
+}
+```
+
+What if you forget that if check? Your logic has now become entirely flawed.
+The `if` being an expression also makes it far more ergonomic to read as its
+just `something is value if cond and fallback otherwise`, compared to the
+`something is value, and if cond is not true put fallback in it`. It just feels
+much more natural. Making statements like `switch` an expression can
+extend this idea even further.
+
+The second reason, which is perhaps more important technically, is more specific
+to my plans, though. Before I even thought of doing this as a concrete idea, 
+I was spending time teaching myself [the Hindley-Milner type system](https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system),
+in order to implement it in zen and make it statically typed. However, once
+I finally set out to try and actually do it, I realized that it does not
+work very well for traditional imperative-type languages whose grammar separates
+expressions and statements, which zen was at that time.
+
+Why? 
+
+To understand why, one needs to understand what Hindley-Milner originally was
+for. The basic Hindley-Milner type system is implemented for the
+lambda calculus, which can be considered as this extremely minimal "programming
+language"; essentially the first ever functional language, although it was not
+a programming language in the sense that we know it today but rather a method
+to represent computation, similar to a Turing machine. The lambda calculus
+has an exceedingly simple grammar with just expressions:
+
+```ebnf
+-- an expression can be:
+e ::= x                 -- a variable
+    | λx.e              -- a function with parameter x and body e
+    | e e               -- a function (first e) called with an argument (second e)
+    | let x = e in e    -- a let-in expression; binds an expression for use in another 
+```
+
+Because HM's base is the lambda calculus, it works naturally with languages 
+which have the functional idea of using expressions to denote everything. Run 
+on an AST, it expects everything to be an expression that gives you a value of 
+a certain type. Statements and declarations, which do not evaluate to anything 
+break that idea; so you need to either special-case them which is annoying, or 
+flatten the entire AST so that everything yields a value.
+
+My choice among the two was the latter: just turn everything into an expression
+so that it works perfectly with HM!
+
+zen has always had a bit of a functional touch. Instead of opting for
+something like uniform function call syntax or leaning into method chaining,
+I decided to borrow the pipe operator `|>` from Elixir instead. While Crafting
+Interpreters did give zen first-class functions, what it did not give it was 
+anonymous functions as well as shorthand arrow functions. Therefore, this felt
+like a step in the right direction.
+
+# How exactly is it done?
+
+The main idea is: you reinterpret every single AST node as something that returns
+a value. This means that a dichotomy of statements and expressions, or in zen's
+case a trichotomy with declarations, statements and expressions, flattens out
+into just expressions. How do you do this for each type of node?
+
+## Sequence expressions
+
+The very first thing that is necessary to clear up is: how do you describe
+a program? If the program is only composed of expressions, does that mean
+the program is itself an expression? How does that work? How do you interpret 
+all of the separate expressions that the program contains as that one big
+expression?
+
+The answer to that is **sequence expressions**. I modeled a sequence expression
+as two expressions, separated by a specific separator token (in my case a
+newline or a semicolon). The grammar is thus like
+
+```
+sequence ::= expr ("\n" | ";") expr?
+```
+
+As it is an expression, it has to evaluate to something. How does it evaluate?
+Well, it evaluates the left expression, then **discards** that result, evaluates
+the right expression, and returns the value of that right expression as its value.
+The right expression is optional; if it doesn't exist the sequence evaluates
+to a null value. With this logic, something like
+
+```zen_lang
+1; 2
+```
+
+naturally evaluates to the value 2, disregarding the evaluation of the previous
+expression `1`. This is very similar to how Rust does things; almost everything
+in Rust is an expression as well, and the semicolon acts as a "discard" operator;
+resembling how in my model of the sequence a newline without a right expression
+evaluates to a null value as it has already "discarded" the previous expression.
+
+There are a few really useful benefits to this approach. Firstly, it perfectly
+models normal statement-based code while still being a valid expression. You
+gotta make sure that the language can still feel familiar and "normal" even if 
+it is different underneath, otherwise it will just be a nightmare to understand.
+
+Secondly, it allows us to do really cool things like:
+
+```zen_lang
+var a = {
+    var b = 3
+    b * 2
+}
+```
+
+You can describe a variable as a chain of expressions. How cool is that?
+
+But... how exactly do you model it in the parser (in this case, a Pratt parser)?
+Do you make the newline an  infix operator with a defined precedence level in 
+the parser? The answer is... sort of. Yes, the newline does indeed act as an 
+infix operator, and it does have a precedence; it has the lowest possible precedence
+as it is the chainer of EVERY possible expression. However, it is not ideal to 
+just slap it on the precedence list for the parser, as it is not something that 
+should just be able to appear anywhere within a program. The better approach is 
+to define two levels of expression-parsing function. In my parser, it looks
+something like:
+
+```odin
+parse :: proc(p: ^Parser) -> (expr: Expr, success: bool) {
+	if parser_is_at_end(p) {
+		return nil, true
+	}
+	return parse_expression_top(p), !p.had_error
+}
+
+parse_expression_top :: proc(p: ^Parser) -> Expr {
+	fst := parse_expression(p)
+	if !parser_match(p, .NEWLINE, .SEMI) {
+		return fst
+	}
+
+	if p.panic_mode {
+		parser_synchronize(p)
+	}
+
+	seq := new(SequenceExpr)
+	seq.token = parser_previous(p)
+	seq.left = fst
+	seq.operator = parser_previous(p)
+	if parser_is_at_end(p) || parser_check(p, .RSQUIRLY) {
+		seq.right = nil
+	} else {
+		seq.right = parse_expression_top(p)
+	}
+	return seq
+}
+
+parse_expression :: proc(p: ^Parser) -> Expr {
+    // ... Pratt parsing logic ...
+}
+```
+
+You parse the first expression using the existing expression parsing logic.
+Then, you check if there actually is a newline or semicolon afterward, and if
+not, just return. Remember, your program is entirely allowed to be just a 
+single random expression (even though that's never really useful). If you DO see
+a newline, we actually have an actual sequence, and we look for the second
+operand.
+
+But you have to be careful here as well. What if the program just goes to EOF
+immediately after (or if we're at the end of a block; we'll get to that later)?
+In that case the second operand doesn't exist, so you just return the one-armed
+sequence. If it DOES exist, you parse it as well.
+
+Note how the left one just parses an expression, but the right one recursively
+calls `parse_expression_top`. This is to allow that sequence of expressions
+to actually be a sequence; something like `1; 2; 3; 4` gets parsed as
+`(seq 1 (seq 2 (seq 3 4)))`, allowing the entire program to just be one
+huge expression. That is just immensely satisfying.
+
+One thing you may notice that while the parser is a Pratt parser with every
+operator having its own separate parsing rule, this one specific part of
+the parser is not a part of that logic; the newline is not given a Pratt
+infix rule. Why?
+
+This is because the sequence expression must appear **only in specific cases**.
+Specifically, the sequence expression must appear in the top level (global scope)
+as the single expression connecting all global expressions, and inside blocks
+connecting the sequential operations. The sequence expression should not be
+usable as just another general-purpose expression. Why? Well, it was mainly
+just a design decision; it doesn't really make any sense to use a sequence
+expression outside these two contexts.
+
+## if/switch
+
+The branching statements; these always tend to be the ones appreciated a
+lot when given expression forms. This is because they just are so useful
+and intuitive in that form.
+
+For the `if` expression, the idea was pretty simple; it evaluates to whatever
+value the matching branch returns.
+
+```zen_lang
+val hello = if happy { "hey!" } else { "hi." }
+```
+
+The more interesting case is when there is no `else` branch at all. What
+do you evaluate to? The obvious idea would be "evaluate to the `if` branch if
+that matches, otherwise return a nil value". But that's rather unpredictable; you
+want your expressions to give you predictable values as far as possible. One
+approach you could take is just disallow one-armed `if` when it is used as a value
+entirely. This means
+
+```zen_lang
+val something = if cond { "hi" }
+```
+
+would crash with a compile error. This is what Rust does, and it is reasonable;
+it doesn't really make sense to assign the value of a condition without any
+fallback. But I felt that this was too restrictive, plus finding out when
+a value is "being used" is actually rather annoying; there's a lot of cases!
+So in the end, I decided the best approach would be to just always return `nil`
+for one-armed `if`. The one-armed `if` cannot really be considered as a proper
+"expression", but more of an effect. So, in the previous code example,
+`something` would evaluate to `nil`, even if `cond` was true.
+
+This approach can be annoying if the user expects the `if` to return some value
+when the condition is true only; but when the typechecker is here, it can enforce
+the rule to disallow you from using the resultant `nil` of a one-armed `if` in
+contexts that it doesn't make sense in.
+
+The switch statement is pretty simple. Whatever case matches, the switch
+statement evaluates to:
+
+```zen_lang
+// `switch` evaluates to whatever case `day`'s matching value is associated with
+val message = switch day {
+    "friday" => "yay weekend!"
+    "saturday" => "still weekend!"
+    else => "ugh"
+}
+```
+
+The switch statement is a little stricter than the `if`. Switch statements are
+exhaustive in zen, albeit naïvely, means the compiler doesn't actually know if
+you covered all the cases of a switch, it just always wants an `else` fallback. 
+This still does make the `switch` far more predictable though; it ALWAYS returns 
+a valid value and not some sentinel like `nil` (unless you explicitly returned that).
+
+### about `nil`
+
+One thing I'd like to clear up right now is my idea of `nil` in zen. In many
+languages, `nil` is something that can implicitly coerce to any type and thus
+a valid value of any type. Technically, zen does do that right now, but that
+is simply the consequence of the fact that it is a dynamic language. `nil`
+is intended as the unit type: similar to `()` in Rust, where it has its own
+type where `nil` is the only valid value, and you can't set something of
+another type to `nil`. This makes it a perfect candidate to describe effect-y
+expressions like the one-armed if. In the future I'll probably turn it into
+a type like `()` anyways, but that is when I have proper record/tuple types
+in the language.
+
+## blocks
+
+This one is pretty cool! The expression basis now allows you to do this like
+in Rust:
+
+```zen_lang
+var a = {
+    var b = 6
+    var c = 7
+    b * c
+}
+```
+
+As described in the part about sequence expressions, blocks are the only place
+other than the global scope which can contain sequence expressions (or any other
+expression really, as `parse_expression_top()` will just return a non-sequence
+expression if there is no sequence). Hence, the block doesn't really have
+any logic of its own; it can be considered as a way to enclose sequence
+expressions to make them usable as values. Blocks evaluate to whatever
+expression is inside of them; which means visually they appear to evaluate
+to whatever is the last expression, as sequence expressions do exactly that, 
+and other expressions in a block will always be the "last expression" in the 
+block anyways.
+
+However, they also add something really important to the base concept of the 
+sequence expression; scoping. As always, the variables inside a block cannot
+be used anywhere outside, making them useful for adding little isolated
+computation blocks.
+
+One issue I faced when making blocks expressions was something I like to call
+"return value erasure". Every time a block goes out of scope, it pops off all of
+its local variables from the stack. Consider that small example from before.
+Right as that block's execution is done, the VM's value stack looks something
+like
+
+```
+[ b ] [ c ] [ b * c ]
+```
+
+I'm massively oversimplifying of course, there's some other things in there;
+but for now just consider those three values; the `b` and `c` being the local 
+variables declared in the block living on the stack, and the `b * c` being the
+intended return value of the block.
+
+The block's scope now ends. In the old zen, by the time a block's scope
+ended, everything coming from computations in the scope was not on the
+stack anymore, and the only things left were its local variables; so the
+VM would just blindly pop as many values off the stack as there were local
+variables in the block, and it was safe.
+
+But now, the return value is on top of the stack, and obviously it can't be
+just thrown off to make way for the locals to be cleared, because we need it in
+the context after the stack ends. To fix this issue, I added a new field, or
+should I call "register", to my `VM` struct called `save`. It has this hyper-specific
+purpose: guard a block's return value as its scope is being torn down.
+
+So, right before the block scope ending causes the block scope to be cleared,
+an `OP_SET_SAVE` instruction grabs the top of the stack and puts it in the
+`save` register, thus turning the stack just into
+
+```
+[ b ] [ c ]
+```
+
+The block can now safely pop off these local variables, emptying the stack.
+Then the value inside `save` is immediately put back on the stack, getting
+
+```
+[ b * c ]
+```
+
+Solving the whole issue with ease!
+
+The one unfortunate result of this is that it is an additional two cycles on
+the VM, which has some real performance implications. It definitely feels like
+a bit of a temporary fix than anything else; hence I'm still thinking of
+more optimized approaches to this idea, perhaps like a dedicated block scope
+ending opcode.
+
+## while/for/for-in
+
+I thought about what would be a logical thing for a loop to evaluate to. Then
+I realized; there really isn't anything that makes sense. Some accumulated
+value? Not all loops accumulate values. The index? Not all loops care about
+the index. Anything else is too weird of a choice.
+
+Except one that almost made sense: returning a value via a `break`. Rust actually
+does this for its `loop` expressions. However, I realized that doesn't actually
+make sense for the `while`, `for` and `for-in` loops that zen has at all.
+
+The `loop` statement in Rust can actually be represented with a concrete
+type, which would be whatever type of the value the `break` has inside it,
+and in all other cases it just never returns so it gets the type of the
+diverging expression, which in Rust is called `!`. The latter is also called
+the `never` type or the bottom type, more on it later.
+
+So in the end, I decided that all loops should just evaluate to `nil`; that
+is the only idea that makes sense; not everything has a natural value it
+evaluates to. It is a bit unfortunate but that's just how it is, loops are
+not values, they're effects.
+
+## var/val
+
+The `var` and `val` declarations return `nil`. I considered making them
+return what they bound; but decided that didn't really make a lot of sense
+since again, they're more like side effects rather than something that
+directly returns some sensible value. This declaration is kind of like the
+`let x = e` part of the `let-in` lambda calculus expression; it doesn't make
+sense to break that apart and get a value-returning expression does it? Same
+logic.
+
+## func
+
+This was something I did a little trick for. For variable declarations, I had
+taken the `VarDecl` declaration node and turned it into a `VarDeclExpr` that
+evaluates to `nil`. I could've done the same thing for the `FuncDecl` since
+its the same concept... but then I realized... yep, its the same concept; hence
+they can just be merged into one. The function declarations `func name() {}`
+are now parsed as `VarDeclExpr`s that bind an anonymous function to a name.
+This means that function declarations are just syntactic sugar for a variable
+declaration binding a lambda.
+
+This was a very seamless and satisfying merger that only needed minimal adjustments
+to make sure function name printing worked (you wouldn't want your named function
+to be printed as `<func lambda>` now would you?)
+
+## print
+
+I thought about exactly how to go about this for a while. The actual implementation
+is trivial, so that was not the worry; the worry was: do I really need this?
+I could just get rid of this and create a native function for printing instead,
+just like how `puts` exists now. But I decided to keep it anyways. It felt like
+some sort of "heritage" I inherited from clox.
+
+One thing I did with this that some might find interesting is its return value.
+You'd expect a printing expression or function to usually return `nil`; that
+is what they tend to do. But, the `print` expression actually returns what
+it printed instead. This was a choice directly inspired from [nushell](https://nushell.sh).
+Honestly I'm not fully sure if its the best of choices, and I may revisit it 
+later, but for now, its there.
+
+## break/continue/return/exit
+
+These are the juicy ones. What the hell do these even return?
+
+The answer is: **literally nothing**. But you might ask, "hey, the loops and
+variable declarations didn't return anything either!" And you would be...
+somewhat correct; yes, logically they're just effects but there is no harm
+or weirdness in making them return some unit value `nil` anyways. This is
+not the case for these four expressions.
+
+Take this expression:
+
+```zen_lang
+var a = exit
+```
+
+What is the value of `a`? Nothing, because the entire program exited before that
+binding could even be processed!
+
+Therefore, these four are the only expressions that don't actually leave any
+tangible value on the stack, because the control flow never gets there:
+
+- `continue` quits the entire iteration before its context is evaluted
+- `break` quits the entire loop
+- `return` quits the entire function
+- and `exit` quits the entire program!
+
+You might be thinking, "Well, this sounds like a nightmare to represent with
+types? What the hell is the type of an `exit` expression?" In fact, it is
+actually trivial to represent these expressions as types. They are a classic
+case of the `never` or `!` type: the type of a "diverging" expression that never
+returns to its origin of evaluation. It can also be thought of as the type of
+a value that can never exist, or a type which no value ever has.
+
+Functions like `panic` which are used to instantly crash a program also are
+associated with this type; they are treated as functions which return a value of
+type `never`; basically saying "this function doesn't just return nothing, it
+NEVER returns in the first place".
+
+In type theory, `never` is what we call a "bottom type"; a type that is compatible 
+with every other type. It is why a function like
+
+```zen_lang
+func f() {
+    if cond {
+        return value
+    }
+
+    panic("some error")
+}
+```
+
+has a return type which is the return type of `value`; the `never` type of the
+`panic` call at the end of the function happily fits with the type of `value`,
+because if `cond` is satisfied you'll get something with the type of `value`
+and if not the whole program will crash anyways!
+
+## discard
+
+One annoying consequence of everything being an expression is unintentional
+return values. Consider a function like
+
+```zen_lang
+func f() {
+    some_numeric_computation()
+}
+```
+
+where `some_numeric_computation()` does that particular numeric computation and
+returns some value. `f()` is just meant to be an abstraction for that computation
+action rather than actively returning a value. However, as `some_numeric_computation()`
+returns a value and it is at the end of its block, `f()` will also unintentionally
+return that value, because blocks evaluate to whatever is at the end of them.
+That is not what we wanted. This is where the newly added `discard` operator 
+comes in.
+
+Now consider that same function modified as
+
+```zen_lang
+func f() {
+    discard some_numeric_computation()
+}
+```
+
+`discard` is a very simple concept; it is an expression that takes any other
+expression within it, runs whatever is in that expression, and as it says,
+throws that value away. The discarded value is replaced with `nil`. Hence,
+`f()` now returns `nil` rather than whatever `some_numeric_computation()`
+returned.
+
+The choice of making the discard operation a keyword was inspired by [Nim](https://nim-lang.org).
+
+# Things that don't make sense now
+
+In the statement realm, one pervasive concept is the **expression statement**,
+which is basically just an expression wrapped around in statement clothing,
+allowing things like function calls which are naturally expressions to live
+in the statement world and be parsed as a step in that set of steps. But now
+that the sequence expression handles parsing expressions as a set of steps without
+any need to wrap them in anything, this is a concept that just doesn't make sense
+and can safely disappear.
+
+Another thing that disappeared was this thing called the `EmptyStmt`. It was
+a concept somewhat similar to Python's `pass`, which is basically just a
+statement that doesn't do anything, emitted when a `;` is parsed in statement
+position. It was a bit spurious and now disappears; a `;` appearing randomly
+in expression position is now a parse error.
+
+# Some things I traded off
+
+The expression model is not really without its faults. I have touched on some
+of them beforehand; but I'd like to expand on those a bit.
+
+The first and more obvious one is the spurious values returned by the expressions
+that really aren't natural expressions. Loops don't return values. Variable
+declarations don't evaluate to something. The solution to all this was to
+return the unit `nil` to say "it returns nothing" but that just feels a bit
+bizzare for sure; why return anything at all? This has real performance
+implications as well, because whenever the value of the expression is unused
+(which would usually be an extremely rare case) you have a unnecessary VM cycle
+emitting the `nil` return value on the stack. Someday, perhaps I could
+work in some optimizations to help clean this issue up, but it is an
+unfortunate thing that was always gonna be here.
+
+Similar to the previous point, the next one is: sure, everything evaluates
+to something, but you don't **need** everything all the time. And whenever
+you don't need something, you have to force it off of yourself because
+the language pushes you towards it. That push is for good reason because a
+lot of times the expression's value is something you do need or would be
+well off with; but for those cases you have to deal with the whole `discard`
+fiasco. In the end, this is just another tradeoff.
+
+There's the cases where returning values fights the mechanics of the concept
+itself, like the `save` register with the blocks. Though, this is something
+that could be fixed with cleanup in the design of zen in the future; as
+a lot of zen's semantics are still carried over from the statement-based land of
+clox.
+
+The truth of the matter is that full expression-orientedness didn't turn
+out to be as much of an "elegant solution covering all bases" as I imagined,
+there are always some ugly corners with everything. However, I still think
+the parts that are indeed elegant, and there are a lot, are fully worth all of
+it. The whole program is now just one expression; ensuring that a potential type
+checker has a very simple job: just evaluate that one expression's type 
+recursively. Very elegant, indeed. But that's for the next part.
