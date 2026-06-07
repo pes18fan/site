@@ -223,7 +223,7 @@ to actually be a sequence; something like `1; 2; 3; 4` gets parsed as
 `(seq 1 (seq 2 (seq 3 4)))`, allowing the entire program to just be one
 huge expression. That is just immensely satisfying.
 
-One thing you may notice that while the parser is a Pratt parser with every
+As I stated earlier, while the parser is a Pratt parser with every
 operator having its own separate parsing rule, this one specific part of
 the parser is not a part of that logic; the newline is not given a Pratt
 infix rule. Why?
