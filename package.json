@@ -12,17 +12,12 @@
   "dependencies": {
     "@astrojs/mdx": "4.0.3",
     "@astrojs/rss": "4.0.11",
-    "@astrojs/svelte": "^7.2.2",
-    "@astrojs/vercel": "^8.2.11",
-    "@types/marked": "^4.3.2",
-    "@types/sanitize-html": "^2.16.0",
     "astro": "5.15.9",
     "marked": "^4.3.0",
     "mdast-util-from-markdown": "^2.0.2",
     "mdast-util-to-string": "^4.0.0",
     "sanitize-html": "^2.17.0",
-    "sharp": "^0.33.5",
-    "svelte": "^5.44.0"
+    "sharp": "^0.33.5"
   },
   "license": "MIT",
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"

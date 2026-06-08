@@ -1,9 +1,3 @@
----
-import MusicInfo from "./MusicInfo.svelte";
-
-export const prerender = false;
----
-
 <div class="container">
     <footer>
         <div class="footer-info">
@@ -26,7 +20,6 @@ export const prerender = false;
                 >.
             </p>
         </div>
-        {Astro.url.pathname === "/" ? <MusicInfo client:load /> : null}
     </footer>
 </div>
 
