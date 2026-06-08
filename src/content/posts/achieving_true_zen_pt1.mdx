@@ -81,11 +81,11 @@ to represent computation, similar to a Turing machine. The lambda calculus
 has an exceedingly simple grammar with just expressions:
 
 ```ebnf
--- an expression can be:
-e ::= x                 -- a variable
-    | λx.e              -- a function with parameter x and body e
-    | e e               -- a function (first e) called with an argument (second e)
-    | let x = e in e    -- a let-in expression; binds an expression for use in another 
+(* an expression can be: *)
+e ::= x                 (* a variable *)
+    | λx.e              (* a function with parameter x and body e *)
+    | e e               (* a function (first e) called with an argument (second e) *)
+    | let x = e in e    (* a let-in expression; binds an expression for use in another *)
 ```
 
 Because HM's base is the lambda calculus, it works naturally with languages 
