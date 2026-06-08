@@ -565,8 +565,8 @@ declarations don't evaluate to something. The solution to all this was to
 return the unit `nil` to say "it returns nothing" but that just feels a bit
 bizzare for sure; why return anything at all? This has real performance
 implications as well, because whenever the value of the expression is unused
-(which would usually be an extremely rare case) you have a unnecessary VM cycle
-emitting the `nil` return value on the stack. Someday, perhaps I could
+(which would usually be how these expressions are used) you have a unnecessary 
+VM cycle emitting the `nil` return value on the stack. Someday, perhaps I could
 work in some optimizations to help clean this issue up, but it is an
 unfortunate thing that was always gonna be here.
 
