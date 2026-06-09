@@ -32,10 +32,10 @@ export default defineConfig({
                 "javascript",
                 "lua",
                 "crystal",
+                "odin",
             ],
         },
     },
     site: "https://p18f.vercel.app",
     integrations: [mdx()],
 });
-
